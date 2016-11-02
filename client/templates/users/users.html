@@ -1,0 +1,21 @@
+<template name="users">
+
+    <div class="box">
+        <p>All Users</p>
+        <ul>
+            {{#each users}}
+              {{>profile}}
+            {{/each}}
+        </ul>
+    </div>
+    <div class="box">
+        <p> Online Users</p>
+        <ul>
+            {{#each onlineUsers}}
+           {{>profile}}
+            {{else}}
+                No users online
+            {{/each}}
+        </ul>
+    </div>
+</template>

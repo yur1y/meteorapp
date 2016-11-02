@@ -1,0 +1,13 @@
+<template name="profile">
+    <li ><div class="img-rounded">{{#if services.google.picture}}
+        <img src="{{services.google.picture}}" width="75">
+    {{/if}}
+        {{#if services.vk.photo_big}}
+
+            <img src="{{services.vk.photo_big}}" width="75">
+            {{/if}}
+        <p>{{profile.name }}</p>
+        <!--<p>{{emails.[0].address}}</p>-->
+    </div>
+    </li>
+</template>

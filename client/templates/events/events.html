@@ -1,0 +1,26 @@
+<template name="events">
+    <div class="container" style="position: relative">
+
+        {{#if currentUser}}
+
+
+                  <form class="new-event">
+                      <small>      <input type="text" name="name" placeholder="new event name">
+              <button type="submit">Add</button>
+                      </small>    </form>
+
+
+        {{/if}}
+
+        {{#each events}}
+
+            {{>eventName}}
+
+        {{/each}}
+    </div>
+</template>
+
+<template name="eventName">
+    <h2><a href="{{pathFor 'event'}}">{{name}}</a> <br></h2>
+    <button class="delete"><small>delete &times;</small></button>
+</template>

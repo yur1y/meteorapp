@@ -1,5 +1,5 @@
 {
-  "name": "meteoheroku",
+  "name": "hello",
   "private": true,
   "scripts": {
     "start": "meteor run"

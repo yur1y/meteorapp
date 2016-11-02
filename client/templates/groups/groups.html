@@ -1,0 +1,27 @@
+<template name="groups">
+
+    <div class="container" style="position: relative">
+
+        {{#if currentUser}}
+            <div>
+                <form class="new-group">
+               <small>     <input type="text" name="name" placeholder="new group name">
+                  <button type="submit">Add</button>
+               </small>     </form>
+            </div>
+        {{/if}}
+
+        {{#each groups}}
+
+            {{>groupName}}
+
+        {{/each}}
+    </div>
+</template>
+
+<template name="groupName">
+        <!--{{#each grouplogo}}-->
+            <!--{{price}}-->
+            <!--{{/each}}-->
+    <h3>    <a href="{{pathFor 'group'}}">{{name}}</a> <br></h3>
+</template>

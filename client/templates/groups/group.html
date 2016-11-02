@@ -1,0 +1,39 @@
+<template name="group">
+    <div class="container row" style="position: relative">
+
+            {{#each group}}
+                {{#if isUser}}
+
+                <p class="col-xs-6 col-sm-3">name:{{name}}</p>
+                <p>status:{{#if open}}
+                    open
+                {{else}} closed
+                {{/if}}</p>
+                {{#each groupOwner}}
+                    Owner:  {{>profile}}
+                {{/each}}
+
+                <p class="col-xs-6 col-sm-3">Created at:&nbsp;&nbsp;{{createdAt}}</p>
+                <div class="col-xs-6 col-sm-3">
+                    Users in group:  {{#each usersIn  }}
+
+                    {{>profile}}
+                    {{else}} <p>no users</p>
+                {{/each}}
+                </div>
+                {{#if isOwner}}
+                    <a href="{{pathFor 'groupEdit'}}" class="edit">
+                        <button>edit group &#x270D;</button>
+                    </a>
+
+                {{/if}}
+                    <div class="container">
+                        {{>itemsData}}
+                    </div>
+                {{/if}}
+
+            {{/each}}
+
+    </div>
+
+</template>
