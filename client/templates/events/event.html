@@ -2,35 +2,17 @@
     <div class="container row" style="position: relative">
 
             {{#each event}}
-                <!--{{#if isUser}}-->
-
                 <p class="col-xs-6 col-sm-3">name:{{name}}</p>
-                <!--<p>status:{{#if open}}-->
-                    <!--open-->
-                <!--{{else}} closed-->
-                <!--{{/if}}</p>-->
-                <!--{{#each groupOwner}}-->
-                    <!--Owner:  {{>profile}}-->
-                <!--{{/each}}-->
-
+                <!--<p class="col-xs-6 col-sm-3">Event Date:{{date}}</p>-->
+                <p class="col-xs-6 col-sm-3">time to event:{{timeleft}}</p>
                 <p class="col-xs-6 col-sm-3">Created at:&nbsp;&nbsp;{{createdAt}}</p>
-                <!--<div class="col-xs-6 col-sm-3">-->
-                    <!--Users in group:  {{#each usersIn  }}-->
-<!---->
-                    <!--{{>profile}}-->
-<!---->
-                <!--{{/each}}-->
-                <!--</div>-->
+
                 {{#if isOwner}}
                     <a href="{{pathFor 'eventEdit'}}" class="edit">
                         <button>edit event &#x270D;</button>
                     </a>
 
                 {{/if}}
-                    <!--<div class="container">-->
-                        <!--{{>itemsData}}-->
-                    <!--</div>-->
-                <!--{{/if}}-->
 
             {{/each}}
 

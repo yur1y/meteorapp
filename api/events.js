@@ -2,7 +2,7 @@ Events = new Mongo.Collection('events');
 
 Meteor.methods({
     'events.insert'(name){
-        // check(name, String);
+
         if (noRepeat(Events,name)) //no  copies
         {
             Events.insert({
@@ -31,7 +31,7 @@ Meteor.methods({
                 date:date
             }
         });
-        Router.go('/events/' + this.url);
+
     },
     'events.Addgroup'(eventId,groupId){
        return Events.update({_id: eventId}, {$addToSet: {groups: groupId}})
