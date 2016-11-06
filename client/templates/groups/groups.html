@@ -2,14 +2,14 @@
 
     <div class="container" style="position: relative">
 
-        <!--{{#if currentUser}}-->
+        {{#if currentUser}}
             <div>
                 <form class="new-group">
                   <input type="text" name="name" placeholder="new group name">
                   <button type="submit">Add</button>
                    </form>
             </div>
-        <!--{{/if}}-->
+        {{/if}}
 
         {{#each groups}}
 
