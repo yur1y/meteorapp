@@ -7,7 +7,7 @@ Items.allow({
         return true;
     },
     remove: function (userId, file) {
-        return !file.userId || userId === file.userId;
+        return true;
     },
     update: function (userId, file, fields, mod) {
         return true;
@@ -34,7 +34,7 @@ if (Meteor.isServer) {
                 return true;
             },
             remove: function (userId, file) {
-                return !file.userId || userId === file.userId;
+                return true;
             },
             update: function (userId, file) {
                 return true;
