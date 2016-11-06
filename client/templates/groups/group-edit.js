@@ -38,6 +38,7 @@ Template.groupEdit.events({
         e.preventDefault();
         Router.go('/groups/' + this.url)
     },
+
     'submit .update'(e){
         e.preventDefault();
 
@@ -45,25 +46,29 @@ Template.groupEdit.events({
         const open = e.target.open.checked;
 
         Meteor.call('groups.update', this._id, name, open);
-
-        // Router.go('/groups/' + getSlug(name));
     },
+
     'click .addUser'(e){
         e.preventDefault();
         Meteor.call('users.Addgroup', this._id, Session.get('current_g'));
     },
+
     'click .removeUser'(e){
         e.preventDefault();
         Meteor.call('users.Removegroup', this._id, Session.get('current_g') )
     },
+
     'click .remove'(e){
         e.preventDefault();
         Meteor.call('groups.remove', this._id,this.url);
     },
+
     'click .newLogo'(e){
         e.preventDefault();
         Meteor.call('items.insert',Session.get('current_url'));
-    },'click .noLogo'(e){
+    },
+
+    'click .noLogo'(e){
         e.preventDefault();
      Meteor.call('groups.noLogo',Session.get('current_g'));
     }
