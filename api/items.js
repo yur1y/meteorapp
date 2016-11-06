@@ -40,14 +40,6 @@ if (Meteor.isServer) {
                 return true;
             }
         }),
-        onRead (fileId, file, req, res) {
-            // Deny access if file is private and token is not valid
-            if (file.userId && (file.token !== req.query.token)) {
-                res.writeHead(403, {"Content-Type": 'text/plain'});
-                res.end('Forbidden');
-                return false;
-            }
-        },
         simulateWriteDelay: 0,
     });
 }
