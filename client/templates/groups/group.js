@@ -1,11 +1,12 @@
-
-
+import {Groups} from '../../../api/groups';
 
 Template.group.helpers({
     group(){
         return Groups.find({})
     },
     isOwner(){
+        Session.set('current_url',this.url);
+
         return this.owner === Meteor.userId();
     },
     groupOwner(){

@@ -1,10 +1,13 @@
+import {Groups} from '../../../api/groups';
 Template.groupEdit.helpers({
+
     group(){
 
         return Groups.find()
     },
     isOwner(){
         Session.set('current_g',this._id);
+        Session.set('current_url',this.url);
 
         return this.owner == Meteor.userId()
     },
@@ -53,8 +56,15 @@ Template.groupEdit.events({
         e.preventDefault();
         Meteor.call('users.Removegroup', this._id, Session.get('current_g') )
     },
-    'click .delete'(e){
+    'click .remove'(e){
         e.preventDefault();
-        Meteor.call('groups.remove', this._id);
+        Meteor.call('groups.remove', this._id,this.url);
+    },
+    'click .newLogo'(e){
+        e.preventDefault();
+        Meteor.call('items.insert',Session.get('current_url'));
+    },'click .noLogo'(e){
+        e.preventDefault();
+     Meteor.call('groups.noLogo',Session.get('current_g'));
     }
 });

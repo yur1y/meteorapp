@@ -2,26 +2,20 @@
 
     <div class="container" style="position: relative">
 
-        {{#if currentUser}}
+        <!--{{#if currentUser}}-->
             <div>
                 <form class="new-group">
-               <small>     <input type="text" name="name" placeholder="new group name">
+                  <input type="text" name="name" placeholder="new group name">
                   <button type="submit">Add</button>
-               </small>     </form>
+                   </form>
             </div>
-        {{/if}}
+        <!--{{/if}}-->
 
         {{#each groups}}
 
-            {{>groupName}}
+            {{>groupTitle}}
 
         {{/each}}
     </div>
 </template>
 
-<template name="groupName">
-        <!--{{#each grouplogo}}-->
-            <!--{{price}}-->
-            <!--{{/each}}-->
-    <h3>    <a href="{{pathFor 'group'}}">{{name}}</a> <br></h3>
-</template>

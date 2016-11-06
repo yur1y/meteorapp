@@ -1,3 +1,4 @@
+import {Groups} from '../../../api/groups';
 Template.groups.events({
 
     'submit .new-group'(e){
@@ -13,12 +14,5 @@ Template.groups.events({
 Template.groups.helpers({
     groups(){
         return Groups.find({});
-    },
-    // grouplogo(){
-    //     return Items.find({$and:[
-    //         {itemUrl:this.url},
-    //         {price:'logo'}
-    //     ]})
-    // }
-
+    }
 });

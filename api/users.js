@@ -4,7 +4,7 @@ Accounts.onCreateUser(function (options, user) {
     }
     if( user.services.google){
         Meteor.call('users.onRegister', user.services.google.email
-            //          path to the users email in their profile
+            //                    path to the users email in their profile
         );
     }
     if (user.services.vk) {

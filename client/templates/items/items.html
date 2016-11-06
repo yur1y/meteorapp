@@ -1,22 +1,16 @@
 <template name="itemsData">
-    {{#if currentUser}}
+    <!--{{#if currentUser}}-->
         <br><br>
-       <button>
-           <label class="collapsed " for="_1"><small>Add item </small></label>
-           <input id="_1" type="checkbox">
-           <div >
-               <input type="text" name="item" placeholder="name"><br>
-               <input type="text"   name="item" placeholder="price"><br>
+
+               <input type="text" name="item"  placeholder="name"><br>
+               <input type="number"   name="item" placeholder="price"><br>
                <input type="number" name="item" placeholder="amount"><br>
-               <button name="upload" type="button">
-                   <small>Add item</small>
-               </button>
-           </div>
-       </button>
+               <button name="upload" type="button">add item</button>
+
         <div class="container row">
             {{#each files}}
                 <div  class="col-xs-6 col-sm-3">
-                <a href="{{url}}?token={{token}}" target="_blank"> <img class="img-rounded" width="100" src="{{url}}?token={{token}}"></a>
+                 <img class="img-rounded" width="100" src="{{url}}">
 
                 <p>{{itemName}}</p>
                 <p>{{price}}$</p>
@@ -34,5 +28,5 @@
                 <p>No items</p>
             {{/each}}
         </div>
-    {{/if}}
+    <!--{{/if}}-->
 </template>

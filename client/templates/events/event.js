@@ -1,4 +1,4 @@
-
+import {Events} from '../../../api/events';
 Template.event.helpers({
     event(){
         return Events.find({})

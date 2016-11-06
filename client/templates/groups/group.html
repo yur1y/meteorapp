@@ -2,8 +2,8 @@
     <div class="container row" style="position: relative">
 
             {{#each group}}
-                {{#if isUser}}
-
+                <!--{{#if isUser}}-->
+                <p><img src="{{logo}}" height="150"></p>
                 <p class="col-xs-6 col-sm-3">name:{{name}}</p>
                 <p>status:{{#if open}}
                     open
@@ -30,7 +30,7 @@
                     <div class="container">
                         {{>itemsData}}
                     </div>
-                {{/if}}
+                <!--{{/if}}-->
 
             {{/each}}
 

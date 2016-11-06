@@ -1,3 +1,4 @@
+import {Events} from '../../../api/events';
 Template.events.events({
 
     'submit .new-event'(e){

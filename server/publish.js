@@ -1,4 +1,6 @@
-import {Items} from '../api/items'
+import {Items} from '../api/items';
+import {Groups} from '../api/groups';
+import {Events} from '../api/events';
 
 Meteor.publish('groups', function () {
     return Groups.find

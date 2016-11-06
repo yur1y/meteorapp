@@ -1,13 +1,13 @@
 <template name="profile">
-    <li ><div class="img-rounded">{{#if services.google.picture}}
-        <img src="{{services.google.picture}}" width="75">
-    {{/if}}
-        {{#if services.vk.photo_big}}
+    <li>
+        <div class="img-rounded">{{#if services.google.picture}}
+            <img src="{{services.google.picture}}" width="50">
 
-            <img src="{{services.vk.photo_big}}" width="75">
-            {{/if}}
-        <p>{{profile.name }}</p>
-        <!--<p>{{emails.[0].address}}</p>-->
-    </div>
+        {{else}}
+            <img src="{{services.vk.photo_big}}" width="50">
+
+        {{/if}}
+            <p>{{profile.name }}</p>
+        </div>
     </li>
 </template>

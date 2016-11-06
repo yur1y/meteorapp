@@ -1,11 +1,13 @@
+import {Events} from '../../../api/events';
 Template.eventEdit.helpers({
     event(){
         return Events.find();
     },
     isOwner(){
+
+        Session.set('current_e',this._id);
+
         return this.owner == Meteor.userId()
-    },dateNow(){
-        return new Date().toUTCString()
     }
 });
 
@@ -25,16 +27,17 @@ Template.eventEdit.events({
     },
     'click .addGroup'(e){
         e.preventDefault();
-        let eventId = $('p:first').text();
-        Meteor.call('events.Addgroup', this._id, eventId)
+
+        Meteor.call('events.Addgroup', Session.get('current_e'), this._id)
     },
     'click .removeGroup'(e){
         e.preventDefault();
-        let eventId = $('p:first').text();
-        Meteor.call('events.Removegroup', this._id, eventId)
+
+        Meteor.call('events.Removegroup', Session.get('current_e'), this._id, )
     },
-    'click .delete'(e){
+    'click .remove'(e){
         e.preventDefault();
+
         Meteor.call('events.remove', this._id);
     }
 });

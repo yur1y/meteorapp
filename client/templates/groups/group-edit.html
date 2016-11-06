@@ -1,41 +1,61 @@
 <template name="groupEdit">
     {{#each group}}
         {{#if isOwner}}
-            <div class="container">
+
+            <div class="container"><a href="#" class="noLogo">X</a>
+                <img src="{{logo}}" width="100" align="left" class="img-rounded newLogo">
+            </div>
+               <a href="#"> <small class="newLogo"> change logo</small></a>
+            <div>
                 <form class="update">
-                    <label> Name:
+                    <label>Group Name:
                         <input type="text" value="{{name}}" name="name">
                     </label>
                     <br>
-                    <label><small>Open for everyone ?</small>
+                    <label>
+                        <small>Open for everyone ?</small>
                         <input type="checkbox" checked="{{open}}" name="open">
                     </label>
-                    <br>
-                    <button class="back" type="button"><small>Back</small></button>
-                    <button type="submit"><small>Submit</small></button>
-                    <button class="delete"><small>delete &times;</small></button>
+                    <br> &emsp13;
+                    <button class="back" type="button">
+                        <small>Back</small>
+                    </button>
+                    <button type="submit">
+                        <small>Submit</small>
+                    </button>
+                    <button class="delete">
+                        <small>delete &times;</small>
+                    </button>
                 </form>
-
             </div>
             <div class="row">
 
                 <div class="col-xs-6 col-sm-3">
-                    <b>Users in group:</b>  {{#each usersIn  }}
+                    <p> Users in group</p>
+                    {{#each usersIn  }}
 
-                {{>profile}}
-                    <button class="removeUser"><small>Remove User</small></button>
+                        {{>profile}}
+                        <button class="removeUser">
+                            <small>Remove User</small>
+                        </button>
+                    {{else}}
+                        <p>Only you in group</p>
+
                     {{/each}}
                 </div>
 
-                <div class="col-xs-6 col-sm-3"> <b>All Users</b>
+                <div class="col-xs-6 col-sm-3"><b>All Users</b>
                     {{#each allUsers}}
                         {{>profile}}
-                        <button class="addUser"><small>Add User</small></button>
+                        <button class="addUser">
+                            <small>Add User</small>
+                        </button>
                     {{/each}}
                 </div>
 
             </div>
-        {{else}} <div>only owner can view this </div>
+        {{else}}
+            <div>only owner can view this</div>
         {{/if}}
 
     {{/each}}
