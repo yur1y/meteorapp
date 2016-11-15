@@ -8,27 +8,17 @@
                <a href="#"> <small class="newLogo"> change logo</small></a>
             <div>
                 <form class="update">
-                    <label>Group Name:
-                        <input type="text" value="{{name}}" name="name">
-                    </label>
+                   <small>Group Name:</small>
+                        <input {{edit.name}} >
                     <br>
-                    <label>
                         <small>Open for everyone ?</small>
-                        <input type="checkbox" checked="{{open}}" name="open">
-                    </label>
-                    <button class="back" type="button">
-                        <small>Back</small>
-                    </button>
-                    <button type="submit">
-                        <small>Submit</small>
+                        <input {{edit.open}}>
 
-                    </button><button class="remove">
-                    <small>delete &times;</small>
-                </button>
+                    <input {{edit.back}} />
+                    <input {{edit.submit}} />
+                    <input {{edit.remove}} />
                 </form>
                 <br> &emsp13;
-
-
             </div>
             <div class="row">
 
@@ -42,7 +32,6 @@
                         </button>
                     {{else}}
                         <p>Only you in group</p>
-
                     {{/each}}
                 </div>
 

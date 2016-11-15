@@ -8,8 +8,8 @@
                         <input type="text" value="{{name}}" name="name">
                     </label>
                     <br>
-                    <label><small>Event Date</small>
-                        <input   type="datetime-local" value="{{date}}"  name="date">
+                    <label>
+                       <input {{eventDate}} />
                     </label>
                     <br>
                     <button class="back" type="button"><small>Back</small></button>
@@ -18,24 +18,7 @@
                 </form>
 
             </div>
-            <div class="row">
 
-                <div class="col-xs-6 col-sm-3">
-                    <b>Users in group:</b>  {{#each usersIn  }}
-
-                {{>profile}}
-                    <button class="removeGroup"><small>Remove User</small></button>
-                    {{/each}}
-                </div>
-
-                <div class="col-xs-6 col-sm-3"> <b>All Users</b>
-                    {{#each allUsers}}
-                        {{>profile}}
-                        <button class="addUser"><small>Add User</small></button>
-                    {{/each}}
-                </div>
-
-            </div>
         {{else}} <div>only owner can view this </div>
         {{/if}}
 

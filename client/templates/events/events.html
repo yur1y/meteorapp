@@ -1,21 +1,13 @@
 <template name="events">
     <div class="container" style="position: relative">
 
-        {{#if currentUser}}
-
-
-                  <form class="new-event">
-                      <small>      <input type="text" name="name" placeholder="new event name">
-              <button type="submit">Add</button>
-                      </small>    </form>
-
-
-        {{/if}}
+        <form class="new-event">
+            <input {{newEvent.name}} />
+            <input {{newEvent.button}} />
+        </form>
 
         {{#each events}}
-
             {{>eventName}}
-
         {{/each}}
     </div>
 </template>

@@ -1,48 +1,50 @@
+import {Meteor} from 'meteor/meteor';
+import {Mongo} from 'meteor/mongo';
+import {Router} from 'meteor/iron:router';
+import {moment} from 'meteor/momentjs:moment';
+import {getSlug} from 'meteor/ongoworks:speakingurl';
+
+import {noRepeat, noLogo, ownsDocument} from '../lib/helpers';
+
 export const Groups = new Mongo.Collection('groups');
 
 Meteor.methods({
     'groups.insert'(name){
-
-        if (noRepeat(Groups, name)) //no  copies
-        {
+        if (noRepeat(Groups, name)) {
             Groups.insert({
-                name: name,
+                name:  name,
                 createdAt: moment().format('MMMM Do YYYY, h:mm a'),
                 url: getSlug(name),
                 owner: this.userId,
                 open: false,
-                items: [],
+                // items: [],
                 users: [],
                 logo: noLogo()
             });
-
-        } else {
-            throw new Meteor.Error('group already exist');
         }
     },
     'groups.remove'(groupId, url){
         Meteor.call('items.remove', url);
-        Meteor.users.update({}, {$pull: {groups: groupId}});
+        Meteor.users.update({}, {$pull: {groups: groupId}}, {multi: true}); //avoid broken group-ids
         Groups.remove(groupId);
-        Router.go('/groups');
     },
-    'groups.update'(id, name, open){
-
-        Groups.update({_id: id}, {
-            $set: {
-                name: name,
-                url: getSlug(name),
-                open: open
-            }
-        });
-        Router.go('/groups/' + this.url);
+    'groups.update'(id, name, open,oldName){
+        if (noRepeat(Groups, name,oldName)) {
+            Groups.update({_id: id}, {
+                $set: {
+                    name:   name,
+                    url: getSlug(name),
+                    open: open
+                }
+            });
+        }
     },
     'groups.newLogo'(id, url){
         Groups.update({_id: id}, {$set: {logo: url}})
-    }, 'groups.noLogo'(id){
-    Groups.update({_id:id},{$set:{logo:noLogo()}});
+    },
+    'groups.noLogo'(id){
+        Groups.update({_id: id}, {$set: {logo: noLogo()}});
     }
-
 });
 
 Groups.allow({

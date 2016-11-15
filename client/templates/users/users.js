@@ -1,10 +1,12 @@
+import {Meteor} from 'meteor/meteor';
+import {Template} from 'meteor/templating';
+
+
 Template.users.helpers({
     users(){
-        return Meteor.users.find({$or:[{
-            'services.google.picture':{$exists:true}
-        },{'services.vk.photo_big':{$exists:true}}]});
+        return Meteor.users.find({});
     },
     onlineUsers(){
-       return Meteor.users.find({'status.online':true})
+        return Meteor.users.find({'status.online': true})
     }
 });

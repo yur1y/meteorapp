@@ -1,12 +1,13 @@
 <template name="itemsData">
-    {{#if currentUser}}
+
         <br><br>
 
-               <input type="text" name="item"  placeholder="name"><br>
-               <input type="number"   name="item" placeholder="price"><br>
-               <input type="number" name="item" placeholder="amount"><br>
-               <button name="upload" type="button">add item</button>
-
+                <form class="new-item">
+                    <input {{newItem.name}} />
+                    <input {{newItem.price}} />
+                    <input  {{newItem.amount}} />
+                    <input {{newItem.button}} />
+                </form>
         <div class="container row">
             {{#each files}}
                 <div  class="col-xs-6 col-sm-3">
@@ -26,5 +27,5 @@
                 <p>No items</p>
             {{/each}}
         </div>
-    {{/if}}
+
 </template>

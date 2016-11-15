@@ -1,49 +1,66 @@
 import {Meteor} from 'meteor/meteor';
-import {UploadFS} from 'meteor/jalik:ufs'
+import {Template} from 'meteor/templating';
+
 import {Items} from '../../../api/items'
-if (Meteor.isClient) {
 
 
-    Template.itemsData.events({
-
-        'click [name=upload]'(e)  {
-            e.preventDefault();
-            let d = document;
-            let name = d.getElementsByName('item')[0].value;
-            let price = d.getElementsByName('item')[1].value;
-            let amount = d.getElementsByName('item')[2].value;
-
-            if (name && price && amount) {
-                Meteor.call('items.insert', Session.get('current_url'), name, price, amount);
-                d.getElementsByName('item')[0].value = '';
-                d.getElementsByName('item')[1].value = '';
-                d.getElementsByName('item')[2].value = '';
-            }else{
-                alert('Please fill all required fields')
-            }
+Template.itemsData.helpers({
+    newItem: {
+        name: {
+            name: 'name',
+            type: 'text',
+            minLength: 3,
+            required: true,
+            placeholder: "name"
         },
-        'click [name=delete]'(e) {
-            e.preventDefault();
-            Meteor.call('items.remove', this._id);
+        price: {
+            name: "price",
+            type: "number",
+            min: 1,
+            required: true,
+            placeholder: "price"
         },
-        // 'click [name=edit]'(ev){
-        //     ev.preventDefault();
-        //     let name = document.getElementsByName('edit')[0].value;
-        //     let price = document.getElementsByName('edit')[1].value;
-        //     let amount = document.getElementsByName('edit')[2].value;
-        // }
-    });
-
-    Template.itemsData.helpers({
-
-        files() {
-            return Items.find({price: {$exists: true}}, {
-                sort: {createdAt: 1}
-            });
+        amount: {
+            name: "amount",
+            type: "number",
+            min: 1,
+            required: true,
+            placeholder: "amount"
         },
-        isOwner() {
-
-            return Meteor.userId() === this.owner || !this.userId;
+        button: {
+            type: 'submit',
+            value: 'add article'
         }
-    });
-}
+
+    },
+    files(){
+        return Items.find({price: {$exists: true}}, {
+            sort: {createdAt: 1}
+        })
+    },
+    isOwner() {
+        return Meteor.userId() === this.owner
+    }
+});
+
+Template.itemsData.events({
+
+    'submit .new-item'(e)  {
+        e.preventDefault();
+        let name = e.target.name.value;
+        let price = e.target.price.value;
+        let amount = e.target.amount.value;
+
+        Meteor.call('items.insert', this.url, name, price, amount);  ///this.url from group template
+
+        setTimeout(function () {
+            e.target.name.value = '';
+            e.target.price.value = '';
+            e.target.amount.value = '';
+        }, 1000)
+    },
+    'click [name=delete]'(e) {
+        e.preventDefault();
+        Meteor.call('items.remove', this._id);
+    },
+});

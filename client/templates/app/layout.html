@@ -1,11 +1,9 @@
 
 <template name="layout"  >
-    <div class="container" style="min-height: 100%;margin: 0 auto -4em" >
+    <div class="container" style="min-height: 100%;margin: 0 auto -10em" >
         {{>header}}
             {{>yield 'aside'}}
         {{>yield}}
             {{>yield 'below'}}
-
-
     </div>
 </template>

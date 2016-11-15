@@ -3,19 +3,23 @@
 
             {{#each event}}
                 <p class="col-xs-6 col-sm-3">name:{{name}}</p>
-                <!--<p class="col-xs-6 col-sm-3">Event Date:{{date}}</p>-->
-                <p class="col-xs-6 col-sm-3">time to event:{{timeleft}}</p>
+                <p class="col-xs-6 col-sm-3">{{{timeleft}}}</p>
                 <p class="col-xs-6 col-sm-3">Created at:&nbsp;&nbsp;{{createdAt}}</p>
 
                 {{#if isOwner}}
                     <a href="{{pathFor 'eventEdit'}}" class="edit">
                         <button>edit event &#x270D;</button>
                     </a>
-
                 {{/if}}
 
+                    <div class="container">
+
+                        {{#each eventGroups}}
+                            {{#if groupEvent}}
+                                {{>groupTitle}}
+                            {{/if}}
+                        {{/each}}
+                    </div>
             {{/each}}
-
     </div>
-
 </template>
