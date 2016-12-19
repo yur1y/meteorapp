@@ -1,31 +1,108 @@
-* {
-    margin: 0;
-}
-html, body {
-    height: 100%;
+ body {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
+    background-color: #FAFAFA;
 }
 
-
-.wrapper {
-    min-height: 100%;
-    height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
-    height: 100%;
-    margin: 0 auto -155px; /* the bottom margin is the negative value of the footer's height */
-}
-.footer, .push {
-    height: 155px; /* .push must be the same height as .footer */
-}
-.box {
-    display: inline-block;
-    padding: 5px;
-    min-width: 100px;
-    min-height: 50px;
-    vertical-align: top;
+.login a {
+    color: white;
+    text-decoration: none;
 }
 
-/*.material-icons {*/
-    /*font-size: 60px;*/
-/*}*/
- /*a:default{*/
-     /*color:inherit;*/
- /*}*/
+a, a.login-close-text {
+    color: #898989;
+    text-decoration: none;
+}
+
+i.home {
+    font-size: 30px;
+    vertical-align: sub;
+}
+
+.mdl-layout-title {
+    color: #FAFAFA;
+}
+.main{
+    margin: 0 auto ;
+    /*align-items: center;*/
+    text-align: center;
+
+}
+.mdl-grid {
+    text-align: center;
+
+    margin:auto;
+    width:100%;
+}
+
+div::-webkit-scrollbar{
+    display: none;
+}
+.progress {
+    margin-top: 10%;
+    text-align: center;
+}
+
+.mdl-navigation__link {
+    color: #FAFAFA;
+}
+
+.noLogo{
+    position:inherit;
+    left:300px;
+    top:0;
+}
+.mdl-layout{
+    width:100%;
+}
+
+.noLogo{
+    position: relative;
+    top: 30px;
+    left: 90px;
+}
+.new-item{
+    margin: 0 auto;
+}
+
+.loginbuttons {
+    margin: 15px ;
+}
+
+ .inline {
+     /*position: relative;*/
+     display:inline-flex;
+     margin-bottom: 5%;
+     /*float: left;*/
+     left: 30px;
+ }
+ .amount-input {
+     width: 30px;
+     position: relative;
+ }
+
+ input[type=number]::-webkit-outer-spin-button,
+ input[type=number]::-webkit-inner-spin-button {
+     -webkit-appearance: none;
+     margin: 0;
+ }
+
+ input[type=number] {
+     -moz-appearance:textfield;
+ }
+
+ .stitched {
+     height: 200px;
+     width: 150px;
+     padding: 20px;
+     margin: 50px;
+     background: #FFFBFF;
+     /*color: #fff;*/
+     font-size: 21px;
+     /*font-weight: normal;*/
+     line-height: 1.3em;
+     border: 2px dashed #fff;
+     border-radius: 10px;
+     box-shadow: 0 0 0 4px #FFFBFF, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
+     text-shadow: -1px -1px #FFFBFF;
+     font-weight: lighter;
+ }

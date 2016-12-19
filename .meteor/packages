@@ -15,12 +15,10 @@ standard-minifier-js@1.2.0_1    # JS minifier run for production mode
 es5-shim@4.6.14_1                # ECMAScript 5 compatibility for older browsers.
 ecmascript@0.5.8_1              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.1            # Server-side component of the `meteor shell` command
-sacha:spin
 ongoworks:speakingurl
 iron:router
 momentjs:moment
 accounts-google@1.0.10
-mizzao:user-status
 blaze-html-templates
 check
 session
@@ -38,4 +36,7 @@ mrt:accounts-vk
 zhenya:moment-precise-range
 browser-policy
 accounts-ui
-twbs:bootstrap
+zodiase:mdl
+fourseven:scss
+less
+juliancwirko:s-alert

@@ -1,24 +1,25 @@
 <template name="home">
-    <div> <h2>Hi ! To create this app i use:</h2></div>
+    <div class="mdl-grid">
 
-  <div >
-      <a href="https://meteor.com">
-        <h3>Meteor.js</h3>
-      </a>
-      <img src="https://d14xs1qewsqjcd.cloudfront.net/assets/logo.svg" height="40">
-      <h2><a href="https://github.com/jalik/jalik-ufs"> UploadFS</a></h2>
+
+    <div >
+
+
+        <p >Hi ! To create this app i use:</p >
+        <a href="https://meteor.com">
+            <p>Meteor.js</p>
+        </a>
+        <img src="data:image/png;base64,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" height="225">
+        <p><a href="https://github.com/jalik/jalik-ufs"> UploadFS</a></p>
         <p>Saving large files in mongodb <a href="https://docs.mongodb.com/manual/core/gridfs/">GRIDFS</a> </p>
-</div>
-    <div class="container">
-        <h2>
+
+        <p>
         <a href="https://github.com/iron-meteor/iron-router"><img src="http://iron-meteor.github.io/iron-router/images/iron-router-logo-mobile.png" height="75"></a>
-        </h2>
+        </p>
         <p>A client and server side router designed specifically for Meteor.
         </p>
-    </div>
-    <div class="container">
-    <div>...And many other  miscellaneous things...</div>
 
+    </div>
     </div>
 
 </template>

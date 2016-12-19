@@ -1,38 +1,46 @@
 <template name="group">
-    <div class="container row" style="position: relative">
+    {{#each group}}
+        <div class="mdl-grid">
 
-            {{#each group}}
-                <!--{{#if isUser}}-->
-                <p><img src="{{logo}}" height="150"></p>
-                <p class="col-xs-6 col-sm-3">name:{{name}}</p>
-                <p>status:{{#if open}}
+            {{#if isOwner}}
+                <div class="mdl-cell mdl-cell--12-col">
+
+                    <a href="{{pathFor 'groupEdit'}}" class="edit">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i
+                                class="material-icons">edit</i>group
+                        </button>
+                    </a>
+                </div>
+
+            {{/if}}
+            <div class="mdl-cell"><img src="{{logo}}" height="175"></div>
+
+            <div class="mdl-cell mdl-cell--6-col ">
+
+                <h5>Name:  {{name}}</h5>
+                <h5>Status: {{#if open}}
                     open
                 {{else}} closed
-                {{/if}}</p>
-                {{#each groupOwner}}
-                    Owner:  {{>profile}}
-                {{/each}}
+                {{/if}}</h5>
+            <h5>Created at: {{createdAt}}</h5>
+            <h5>Owner:  {{#each groupOwner}}
+                 {{>profile}}
+            {{/each}}</h5>
+        </div>
 
-                <p class="col-xs-6 col-sm-3">Created at:&nbsp;&nbsp;{{createdAt}}</p>
-                <div class="col-xs-6 col-sm-3">
-                    Users in group:  {{#each usersIn  }}
+        <div class="mdl-cell mdl-cell--6-col">
+            {{#if usersIn}}<p>Users in group:</p> {{/if}}
+            {{#each usersIn  }}
+                {{>profile}}
 
-                    {{>profile}}
-                    {{else}} <p>no users</p>
-                {{/each}}
-                </div>
-                {{#if isOwner}}
-                    <a href="{{pathFor 'groupEdit'}}" class="edit">
-                        <button>edit group &#x270D;</button>
-                    </a>
-                {{/if}}
-                    <div class="container">
-                        {{>itemsData}}
-                    </div>
-                <!--{{/if}}-->
-
+            {{else}} <p>no users</p>
             {{/each}}
+        </div>
 
-    </div>
 
+        </div>
+
+            {{>itemsData}}
+
+    {{/each}}
 </template>

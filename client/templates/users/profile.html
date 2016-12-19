@@ -1,6 +1,7 @@
 <template name="profile">
-    <li>
-        <div class="img-rounded">{{#if services.google.picture}}
+
+    <div class="mdl-cell mdl-cell--1-col-tablet ">
+        {{#if services.google.picture}}
             <img src="{{services.google.picture}}" width="50">
 
         {{else}}
@@ -8,6 +9,7 @@
 
         {{/if}}
             <p>{{profile.name }}</p>
-        </div>
-    </li>
+
+    </div>
+
 </template>

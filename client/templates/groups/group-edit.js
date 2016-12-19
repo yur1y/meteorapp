@@ -19,32 +19,11 @@ Template.groupEdit.helpers({
                 name:'name',
                 value:this.name,
                 type:'text'
-            },
-            open:{
-                name:'open',
-                value:this.open,
-                type:'checkbox',
-            },
-            back:{
-                type:'button',
-                class:'back',
-                value:'back'
-            },
-            submit:{
-                type:'submit',
-                class:'cancel',
-                value:'submit'
-            },
-            remove:{
-                type:'button',
-                class:'remove',
-                value:'delete'
             }
         }
     },
-    group(){
-        return Groups.find()
-    },
+    group:()=> Groups.find()
+    ,
     isOwner(){
         Template.instance().groupId.set(this._id);
 
@@ -71,11 +50,9 @@ Template.groupEdit.events({
     'submit .update'(e){
         e.preventDefault();
 
-        const name = e.target.name.value;
-        const open = e.target.open.checked;
 
-        Meteor.call('groups.update', this._id, name, open,this.name, function (err) {
-            if (!err) Router.go('/groups/' + getSlug(name));
+        Meteor.call('groups.update', this._id,  e.target.name.value, e.target.open.checked,this.name, function (err) {
+            if (!err) Router.go('/groups/' + getSlug( e.target.name.value));
         });
 
     },
@@ -92,8 +69,10 @@ Template.groupEdit.events({
 
     'click .remove'(e){
         e.preventDefault();
-        Meteor.call('groups.remove', this._id, this.url);
-        Router.go('/groups');
+        Meteor.call('groups.remove', this._id, this.url,function (err,res) {
+
+        });
+
     },
 
     'click .newLogo'(e){
@@ -103,9 +82,9 @@ Template.groupEdit.events({
 
     'click .noLogo'(e){
         e.preventDefault();
-        if (this.logo != noLogo()) {
-            Meteor.call('items.remove', this.logo);
-            Meteor.call('groups.noLogo', this._id);
-        }
+         this.logo != noLogo()?(
+            Meteor.call('items.remove', this.logo),
+            Meteor.call('groups.noLogo', this._id)
+    ):Meteor.call('ok', 'no logo')
     }
 });

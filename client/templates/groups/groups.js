@@ -7,31 +7,21 @@ Template.groups.events({
 
     'submit .new-group'(e){
         e.preventDefault();
-
-
-        const name = e.target.name.value;
-        Meteor.call('groups.insert', name, function (err, res) {
-            // if(err){console.log(err.message+ ' '+err.reason)}
+        Meteor.call('groups.insert', e.target.name.value, function (err, res) {
+            return err ? err : null
         });
-        e.target.name.value = '';
     }
 });
 
 Template.groups.helpers({
     newGroup(){
         return {
-            name: {
-                name: 'name',
-                type: 'text',
-                placeholder: 'new group name'
-            },
-            button: {
-                type: 'submit',
-                value: 'Add group'
-            }
+            name: 'name',
+            type: 'text',
+            required: true,
+            minLenght: 3
         }
     },
-    groups(){
-        return Groups.find({})
-    }
+    groups: () =>
+        Groups.find({})
 });

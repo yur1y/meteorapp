@@ -4,47 +4,47 @@ import {Router} from 'meteor/iron:router';
 import {moment} from 'meteor/momentjs:moment';
 import {getSlug} from 'meteor/ongoworks:speakingurl';
 
-import {noRepeat, noLogo, ownsDocument} from '../lib/helpers';
+import {noRepeat, noLogo, ownsDocument, throwError} from '../lib/helpers';
 
 export const Groups = new Mongo.Collection('groups');
 
 Meteor.methods({
-    'groups.insert'(name){
-        if (noRepeat(Groups, name)) {
-            Groups.insert({
-                name:  name,
+    'groups.insert': (name) =>
+        noRepeat(Groups, name) ?
+            [Groups.insert({
+                name: name,
                 createdAt: moment().format('MMMM Do YYYY, h:mm a'),
                 url: getSlug(name),
-                owner: this.userId,
+                owner: Meteor.userId(),
                 open: false,
-                // items: [],
                 users: [],
                 logo: noLogo()
-            });
-        }
-    },
-    'groups.remove'(groupId, url){
-        Meteor.call('items.remove', url);
-        Meteor.users.update({}, {$pull: {groups: groupId}}, {multi: true}); //avoid broken group-ids
-        Groups.remove(groupId);
-    },
-    'groups.update'(id, name, open,oldName){
-        if (noRepeat(Groups, name,oldName)) {
+            }), Meteor.call('ok', 'group ' + name + ' created')] :
+            throwError('group name', 'group with the same name is already exists , try another name'),
+
+    'groups.remove': (groupId, url) => [
+        Meteor.call('items.remove', url),
+        Meteor.users.update({}, {$pull: {groups: groupId}}, {multi: true}), //avoid broken group-ids
+        Groups.remove(groupId),
+        Meteor.isClient ? Router.go('/groups') : null,
+        Meteor.call('ok', 'group deleted')
+    ],
+    'groups.update': (id, name, open, oldName) =>
+        noRepeat(Groups, name, oldName) ?
             Groups.update({_id: id}, {
                 $set: {
-                    name:   name,
+                    name: name,
                     url: getSlug(name),
                     open: open
                 }
-            });
-        }
-    },
-    'groups.newLogo'(id, url){
+            }) : throwError('group name', 'group with the same name is already exists , try another name')
+    ,
+    'groups.newLogo': (id, url) =>
         Groups.update({_id: id}, {$set: {logo: url}})
-    },
-    'groups.noLogo'(id){
-        Groups.update({_id: id}, {$set: {logo: noLogo()}});
-    }
+    ,
+    'groups.noLogo': (id) =>
+        Groups.update({_id: id}, {$set: {logo: noLogo()}})
+
 });
 
 Groups.allow({

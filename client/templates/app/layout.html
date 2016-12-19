@@ -1,9 +1,15 @@
-
 <template name="layout"  >
-    <div class="container" style="min-height: 100%;margin: 0 auto -10em" >
-        {{>header}}
-            {{>yield 'aside'}}
-        {{>yield}}
-            {{>yield 'below'}}
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+             mdl-layout--no-desktop-drawer-button">
+         {{>header}}
+
+        <div class="main" >
+
+                {{>yield 'aside'}}
+                {{>yield}}
+                    {{>sAlert}}
+                {{>yield 'below'}}
+        </div>
+
     </div>
 </template>

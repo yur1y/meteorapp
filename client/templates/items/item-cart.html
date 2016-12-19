@@ -1,0 +1,28 @@
+<template name="itemCart">
+        <div class="inline">  <!--//without id only 1st div works-->
+            <button id="item-wish-{{_id}}"
+                    class="item-wish mdl-button mdl-js-button mdl-button--icon  mdl--ripple-effect">
+            {{#if wished }}   <i class="material-icons">star</i>
+                <div class="mdl-tooltip mdl-tooltip--top " data-mdl-for="item-wish-{{_id}}">
+                    <small>remove from wish list</small>
+                </div>
+            {{else}}
+                <i class="material-icons">star_border</i>  <div class="mdl-tooltip mdl-tooltip--top " data-mdl-for="item-wish-{{_id}}">
+             <small>   add to wish list</small>
+            </div>
+                {{/if}}
+            </button>
+        </div>
+    <div class="inline">
+        <form class="in-cart">
+            <input type="number" value="{{userAmount}}" min="1" maxlength="3" name="amount" class="  amount-input" />
+            <button type="submit" id="item-cart{{_id}}"
+                    class="mdl-button mdl-js-button  mdl-button--icon">
+                <i class="material-icons in-cart">add_shopping_cart</i>
+            </button>
+        </form>
+        <div class="mdl-tooltip mdl-tooltip--top " data-mdl-for="item-cart{{_id}}">
+            add to cart
+        </div>
+    </div>
+</template>

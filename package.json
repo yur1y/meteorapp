@@ -2,7 +2,7 @@
   "name": "hello",
   "private": true,
   "scripts": {
-    "start": "meteor -s settings.json"
+    "start": "meteor run --settings settings.json"
   },
   "dependencies": {
     "meteor-node-stubs": "~0.2.0"

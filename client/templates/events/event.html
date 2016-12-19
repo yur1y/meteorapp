@@ -1,25 +1,44 @@
 <template name="event">
-    <div class="container row" style="position: relative">
+    {{#each event}}
+    <div class="mdl-grid" >
+    <div class=" mdl-cell--8-col">
+        {{#if isOwner}}
 
-            {{#each event}}
-                <p class="col-xs-6 col-sm-3">name:{{name}}</p>
-                <p class="col-xs-6 col-sm-3">{{{timeleft}}}</p>
-                <p class="col-xs-6 col-sm-3">Created at:&nbsp;&nbsp;{{createdAt}}</p>
+    <a href="{{pathFor 'eventEdit'}}" class="edit">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i class="material-icons">edit</i>event </button>
+    </a>
 
-                {{#if isOwner}}
-                    <a href="{{pathFor 'eventEdit'}}" class="edit">
-                        <button>edit event &#x270D;</button>
-                    </a>
-                {{/if}}
+        {{/if}}
+            <br>
+            <table class="mdl-data-table mdl-shadow--2dp">
+                <thead>
+                <tr>
+                    <th >Name</th>
+                    <th>Time to event</th>
+                    <th>Created at</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td >{{name}}</td>
+                    <td>{{{timeleft}}}</td>
+                    <td>{{createdAt}}</td>
+                </tr>
 
-                    <div class="container">
+                </tbody>
+            </table>
 
-                        {{#each eventGroups}}
-                            {{#if groupEvent}}
-                                {{>groupTitle}}
-                            {{/if}}
-                        {{/each}}
-                    </div>
-            {{/each}}
+            <!--<div class="container">-->
+
+                <!--{{#each eventGroups}}-->
+                <!--{{#if groupEvent}}-->
+                <!--{{>groupTitle}}-->
+                    <!--{{/if}}-->
+                <!--{{/each}}-->
+            <!--</div>-->
     </div>
+    </div>
+
+    {{/each}}
+
 </template>

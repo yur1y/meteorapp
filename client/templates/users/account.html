@@ -1,0 +1,106 @@
+<template name="account">
+    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar">
+            <a href="#account-panel" class="mdl-tabs__tab is-active">Account</a>
+            <a href="#cart-panel" class="mdl-tabs__tab">Cart</a>
+            <a href="#dashboard-panel" class="mdl-tabs__tab">Dashboard</a>
+        </div>
+        {{#each userinfo}}
+            <div class="mdl-tabs__panel is-active" id="account-panel">
+                <div class=" mdl-cell--6-col ">
+                    {{>profile}}
+                </div>
+            </div>
+        {{/each }}
+        <div class="mdl-tabs__panel" id="cart-panel">
+            <div class="mdl-grid">
+                <div class="  mdl-cell--6-col">
+                    <h5>Wish List</h5>
+                    {{#each wished}}
+                    <div class="stitched">
+
+                        <img height="100" width="100" src="{{url}}">
+                        <p>name: {{itemName}}</p>
+                        <p> price: {{cash}} $</p>
+                        <p> {{#if coupons}}
+                            Coupons price:{{coupons}}
+                        {{/if}}</p>
+                        <div class="inline">
+                            {{>itemCart}}
+                            <!--{{#if isOwner}}-->
+                                <!--{{>itemEdit}}-->
+                            <!--{{/if}}-->
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                <div class=" mdl-cell--6-col">
+                    <h5>Cart</h5>
+                    {{#each inCart}}
+
+                        <div class="stitched ">
+
+                        <img height="100" width="100" src="{{url}}">
+                        <p>name: {{itemName}}</p>
+                        <p> price: {{cash}} $</p>
+                        <p> {{#if coupons}}
+                            Coupons price:{{coupons}}
+                        {{/if}}</p>
+                        <div class="inline">
+
+                            {{>itemCart}}
+                            <button type="button" id="remove-cart{{_id}}"
+                                    class="mdl-button mdl-js-button  mdl-button--icon">
+                                <i class="material-icons out-cart">remove_shopping_cart</i>
+                            </button>
+                            <div class="mdl-tooltip mdl-tooltip--top " data-mdl-for="remove-cart{{_id}}">
+                                remove from cart
+                            </div>
+                            <!--{{#if isOwner}}-->
+                                <!--{{>itemEdit}}-->
+                            <!--{{/if}}-->
+                        </div>
+                        </div>
+                    {{/each}}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="mdl-tabs__panel" id="dashboard-panel">
+            {{#each userinfo}}
+                {{#if isAdmin}}
+                    <div class="mdl-cell mdl-cell--6-col">
+                        <h3>Users panel</h3>
+                        {{#each allUsers}}
+
+                            {{>profile}}
+                            <button class="editUser mdl-button mdl-js-button mdl-js-ripple-effect" type="button">edit
+                                user
+                            </button>
+                            {{#if showUser}}
+                                <form class=" update">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <input class=" mdl-textfield__input " type="number" min="{{wallet.cash}}"
+                                               value="{{wallet.cash}}" name="cash" id="iCash"/>
+                                        <label class="mdl-textfield__label" for="iCash"> cash</label>
+                                    </div>
+                                    <br>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <input class=" mdl-textfield__input " type="number" min="{{wallet.coupons}}"
+                                               value="{{wallet.coupons}}" name="coupons" id="iCoupons"/>
+                                        <label class="mdl-textfield__label" for="iCoupons"> coupons</label>
+                                    </div>
+                                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                                            type="submit">
+                                        <i class="material-icons">done</i>ok
+                                    </button>
+                                </form>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</template>

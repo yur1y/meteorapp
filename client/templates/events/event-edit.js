@@ -3,9 +3,10 @@ import {Template} from 'meteor/templating';
 import {Router} from 'meteor/iron:router';
 import {ReactiveVar} from 'meteor/reactive-var';
 import {getSlug} from 'meteor/ongoworks:speakingurl';
+import {sAlert} from 'meteor/juliancwirko:s-alert';
 
-import {Events} from '../../../api/events';
 import {Groups} from '../../../api/groups';
+import {Events} from '../../../api/events';
 
 Template.eventEdit.onCreated(function () {
     this.eventId = new ReactiveVar();
@@ -20,15 +21,14 @@ Template.eventEdit.helpers({
             min:  moment().format('YYYY-MM-DDTHH:mm') //datetime-local format
         }
     },
-    event(){
-        return Events.find()
-    },
+    event:() =>  Events.find()
+    ,
     isOwner(){
-
         Template.instance().eventId.set(this._id);
-
         return this.owner == Meteor.userId()
-    }
+    },
+    groups:()=> Groups.find({})
+
 });
 
 Template.eventEdit.events({
@@ -39,10 +39,10 @@ Template.eventEdit.events({
     'submit .update'(e){
         e.preventDefault();
 
-        const name = e.target.name.value;
-        const date = e.target.date.value;
-        Meteor.call('events.update', this._id, name, date,this.name);
-        Router.go('/events/' + getSlug(name));
+        Meteor.call('events.update', this._id, e.target.name.value, e.target.date.value,this.name,function (err, res) {
+             res?  Router.go('/events/' + getSlug(e.target.name.value)):null
+        });
+
     },
     'click .addGroup'(e, temp){
         e.preventDefault();
@@ -53,10 +53,10 @@ Template.eventEdit.events({
         e.preventDefault();
         Router.go('/events');
         Meteor.call('events.Removegroup', temp.eventId.get(), this._id,)
-
     },
     'click .remove'(e){
         e.preventDefault();
         Meteor.call('events.remove', this._id);
+        Router.go('/events');
     }
 });

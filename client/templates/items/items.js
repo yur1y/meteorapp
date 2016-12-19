@@ -1,8 +1,8 @@
 import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
+import {sAlert} from 'meteor/juliancwirko:s-alert';
 
 import {Items} from '../../../api/items'
-
 
 Template.itemsData.helpers({
     newItem: {
@@ -11,56 +11,45 @@ Template.itemsData.helpers({
             type: 'text',
             minLength: 3,
             required: true,
-            placeholder: "name"
         },
-        price: {
-            name: "price",
+        cash: {
+            name: "cash",
             type: "number",
             min: 1,
             required: true,
-            placeholder: "price"
         },
         amount: {
             name: "amount",
             type: "number",
             min: 1,
             required: true,
-            placeholder: "amount"
-        },
-        button: {
-            type: 'submit',
-            value: 'add article'
         }
-
     },
-    files(){
-        return Items.find({price: {$exists: true}}, {
+    files:()=>
+          Items.find({cash: {$exists: true}}, {
             sort: {createdAt: 1}
         })
-    },
+    ,
     isOwner() {
         return Meteor.userId() === this.owner
-    }
+    },
+
 });
 
 Template.itemsData.events({
-
     'submit .new-item'(e)  {
         e.preventDefault();
-        let name = e.target.name.value;
-        let price = e.target.price.value;
-        let amount = e.target.amount.value;
 
-        Meteor.call('items.insert', this.url, name, price, amount);  ///this.url from group template
+        Meteor.call('items.insert', this.url, e.target.name.value,
+           Number( e.target.cash.value),Number( e.target.amount.value),function (err,res) {
+          err? sAlert.error(err.err,err.details): null
+            });
 
-        setTimeout(function () {
-            e.target.name.value = '';
-            e.target.price.value = '';
-            e.target.amount.value = '';
-        }, 1000)
-    },
-    'click [name=delete]'(e) {
-        e.preventDefault();
-        Meteor.call('items.remove', this._id);
-    },
+        // setTimeout(function () {
+        //     e.target.name.value = '';
+        //     e.target.cash.value = '';
+        //     e.target.amount.value = '';
+        // }, 1000)
+    }
+
 });

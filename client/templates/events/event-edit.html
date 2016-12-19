@@ -1,27 +1,25 @@
 <template name="eventEdit">
+    <div class="mdl-grid" >
+    <div class=" mdl-cell--8-col">
     {{#each event}}
+
         {{#if isOwner}}
+            <button class="back mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button"><i class="material-icons">keyboard_backspace</i>back</button>
 
-            <div class="container">
                 <form class="update">
-                    <label> Name:
-                        <input type="text" value="{{name}}" name="name">
-                    </label>
-                    <br>
-                    <label>
-                       <input {{eventDate}} />
-                    </label>
-                    <br>
-                    <button class="back" type="button"><small>Back</small></button>
-                    <button type="submit"><small>Submit</small></button>
-                    <button class="remove"><small>delete &times;</small></button>
-                </form>
+                    <div class="mdl-textfield mdl-js-textfield ">
+                        <input class="mdl-textfield__input " type="text"  value="{{name}}" name="name">
+                        <input class="mdl-textfield__input"  {{eventDate}} />
+                    </div>
 
-            </div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"><i class="material-icons">done</i>Ok</button>
+                </form>
+            <button class="remove mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i class="material-icons">delete</i>delete</button>
 
         {{else}} <div>only owner can view this </div>
         {{/if}}
 
     {{/each}}
-
+    </div>
+    </div>
 </template>

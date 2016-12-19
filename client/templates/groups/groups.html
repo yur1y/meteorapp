@@ -1,24 +1,41 @@
 <template name="groups">
-    <div class="container" style="position: relative">
-        <div>
-            <form class="new-group">
-                <input   {{newGroup.name}} />
-                <input {{newGroup.button}} />
+
+    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar">
+            <a href="#group-panel" class="mdl-tabs__tab is-active">Groups</a>
+
+            <a href="#add-group" class="mdl-tabs__tab">Add group</a>
+        </div>
+
+        <div class="mdl-tabs__panel is-active" id="group-panel">
+
+        {{#each groups}}
+            <div class="mdl-cell mdl-cell--2-col">
+            {{>groupTitle}}
+            </div>
+                {{/each}}
+        </div>
+        <div class="mdl-tabs__panel " id="add-group">
+
+            <form class="new-group ">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class=" mdl-textfield__input " {{newGroup}}  id="group-input"/>
+                    <label class="mdl-textfield__label" for="group-input">name</label>
+                </div>
+               <div> <button class="mdl-button mdl-js-button mdl-js-ripple-effect"  type='submit'><i class="material-icons">add</i>add group</button></div>
             </form>
         </div>
-        {{#each groups}}
-            {{>groupTitle}}
-        {{/each}}
     </div>
+
 </template>
 
 <template name="groupTitle">
-    <div class="container">
+    <div class="mdl-cell mdl-cell--6-col">
 
-            <a href="{{pathFor 'group'}}">
-                <img src="{{logo}}" width="150">
-                <h3>{{name}}      </h3>
+        <a href="{{pathFor 'group'}}">
+            <img src="{{logo}}" width="200">
+            <h4>{{name}}      </h4>
 
-            </a>
+        </a>
     </div>
 </template>

@@ -1,4 +1,5 @@
 import {ServiceConfiguration}  from 'meteor/service-configuration';
+import {Meteor} from 'meteor/meteor';
 
 export let configure =() => {
 

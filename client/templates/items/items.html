@@ -1,31 +1,56 @@
 <template name="itemsData">
+    <div class="mdl-grid">
+        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+            <div class="mdl-tabs__tab-bar">
+                <a href="#item-panel" class="mdl-tabs__tab is-active">Items</a>
+                <a href="#add-item" class="mdl-tabs__tab">Add item</a>
+            </div>
+            <div class="mdl-tabs__panel is-active " id="item-panel">
+                <div class="mdl-grid">
+                    {{#each files}}
 
-        <br><br>
+                        <div class="mdl-cell mdl-cell--2-col-tablet  ">
+                            <div class="stitched">  <img height="100" width="100" src="{{url}}">
+                            <p>name: {{itemName}}</p>
+                            <p>price: {{cash}}$ </p>
 
-                <form class="new-item">
-                    <input {{newItem.name}} />
-                    <input {{newItem.price}} />
-                    <input  {{newItem.amount}} />
-                    <input {{newItem.button}} />
-                </form>
-        <div class="container row">
-            {{#each files}}
-                <div  class="col-xs-6 col-sm-3">
-                 <img class="img-rounded" width="100" src="{{url}}">
+                              {{>itemCart}}
 
-                <p>{{itemName}}</p>
-                <p>{{price}}$</p>
-                <div role="group">
-                    {{#if isOwner}}
-                                <button name="delete" type="button">
-                                    <small>delete</small>
-                                </button>
-                    {{/if}}
+                                {{#if isOwner}}
+                                    {{>itemEdit}}
+                                {{/if}}
+                            </div>
+                        </div>
+                       {{else}}
+                        <p>No items</p>
+                    {{/each}}
                 </div>
+            </div>
+
+            <div class="mdl-tabs__panel " id="add-item">
+                <div class="mdl-grid ">
+                    <form class="new-item">
+                        <div class="mdl-layout">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" mdl-textfield__input "  {{newItem.name}}  id="item-name"/>
+                                <label class="mdl-textfield__label" for="item-name">item name</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" mdl-textfield__input "   {{newItem.cash}}  id="item-cash"/>
+                                <label class="mdl-textfield__label" for="item-cash">cash price</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" mdl-textfield__input "  {{newItem.amount}}  id="item-amount"/>
+                                <label class="mdl-textfield__label" for="item-amount">item amount</label>
+                            </div>
+                        </div>
+                        <button class="mdl-button mdl-js-button mdl-js-ripple-effect" type='submit'><i
+                                class="material-icons">add</i>add
+                            item
+                        </button>
+                    </form>
                 </div>
-            {{else}}
-                <p>No items</p>
-            {{/each}}
+            </div>
         </div>
-
+    </div>
 </template>

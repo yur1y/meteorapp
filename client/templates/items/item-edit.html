@@ -1,0 +1,57 @@
+<template name="itemEdit">
+    <button type="button" class="mdl-button inline mdl-js-button mdl-js-ripple-effect mdl-button--icon editItem">
+        <i class="material-icons">edit</i>
+    </button>
+    <div>
+        <dialog class="mdl-dialog" id="update-{{_id}}">
+
+            <h3 class="mdl-dialog__title">{{itemName}}</h3>
+            <div class="mdl-dialog__content">
+
+                <form class="update">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class=" mdl-textfield__input " type="text" minlength="3"
+                               value="{{itemName}}" name="name" id="iName" required/>
+                        <label class="mdl-textfield__label" for="iName"> name</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class=" mdl-textfield__input " type="number"
+                               value="{{cash}}"
+                               name="cash" id="iCash" required/>
+                        <label class="mdl-textfield__label" for="iCash"> cash</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class=" mdl-textfield__input " type="number"
+                               value="{{amount}}"
+                               name="amount" id="iAmount" required/>
+                        <label class="mdl-textfield__label" for="iAmount"> amount</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class=" mdl-textfield__input " type="number"
+                               value="{{coupons}}" min="0"
+                               name="coupons" id="iCoupons" required/>
+                        <label class="mdl-textfield__label" for="iCoupons"> coupons</label>
+                    </div>
+                    <div class="mdl-dialog__actions--full-width mdl-dialog__actions">
+                        <button class="mdl-button  mdl-js-button mdl-js-ripple-effect  update"
+                                type="submit">
+                            <i class="material-icons">done</i>submit
+                        </button>
+
+                        <button class="remove mdl-button mdl-js-button mdl-js-ripple-effect "
+                                type="button" id="item-remove">
+                            <i class="material-icons">delete</i>delete
+                        </button>
+
+                        <div class="mdl-tooltip mdl-tooltip--top mdl-tooltip--large" data-mdl-for="item-remove"> are you sure?</div>
+                        <button type="button"
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect  cancel">
+                            <i class="material-icons">cancel</i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </dialog>
+    </div>
+</template>

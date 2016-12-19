@@ -7,8 +7,8 @@ export let secure = () => {
     BrowserPolicy.content.allowInlineStyles();
     BrowserPolicy.content.allowFontDataUrl();
 
-    var trusted = [
-        '*.cloudfront.net',
+    let trusted = [
+        'www.google.com.ua',
         '*.github.io',          //some nice urls
         'pp.vk.me',
         '*.googleusercontent.com',

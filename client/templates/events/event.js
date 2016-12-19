@@ -5,25 +5,23 @@ import {Events} from '../../../api/events';
 import {Groups} from '../../../api/groups';
 
 Template.event.onCreated(function () {
-    this.left =new ReactiveVar();
-    setInterval( ()=> {
-        this.left.set(new Date())
-    },1000)
+    this.left = new ReactiveVar();
+    setInterval(() => {
+        this.left.set(new Date()); //update reactive var every 1 sec
+    }, 1000)
 });
 Template.event.helpers({
-    event(){
-        return Events.find({})
-    },
+    event: () => Events.find({})
+    ,
     isOwner(){
-        return this.owner === Meteor.userId();
+        return this.owner == Meteor.userId()
     },
     timeleft(){
-        if(new Date(this.date)-new Date()>0)
-            return 'time to event: '+   moment(Template.instance().left.get()).preciseDiff(this.date);
-        else return '<p> event occured at:  '+ '<br>' + moment(this.date).format('MMMM Do YYYY, h:mm a') +'</p>';
+        return new Date(this.date) - new Date() > 0 ?
+            moment(Template.instance().left.get()).preciseDiff(this.date) :
+        '<p> event occured at:  ' + '<br>' + moment(this.date).format('MMMM Do YYYY, h:mm a') + '</p>';
     },
-    groups(){
-        return  Groups.find()
+    groups:() =>
+          Groups.find({})
 
-    }
 });

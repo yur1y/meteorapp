@@ -7,9 +7,13 @@ Template.events.events({
     'submit .new-event'(e){
         event.preventDefault();
 
-        const name = e.target.name.value;
-        Meteor.call('events.insert', name);
-        e.target.name.value = '';
+
+        Meteor.call('events.insert',  e.target.name.value,function (err, res) {
+            return  err ? null
+                : Meteor.call('ok', 'Event  ' +
+                e.target.name.value+ ' created')
+        });
+
     },
     'click .delete'(e){
         e.preventDefault();
@@ -20,18 +24,13 @@ Template.events.events({
 Template.events.helpers({
     newEvent(){
         return {
-            name: {
-                name: 'name',
-                type: 'text',
-                placeholder: 'new event name'
-            },
-            button: {
-                type: 'submit',
-                value: 'Add event'
-            }
+            name: 'name',
+            type: 'text',
+            required: true,
+            minLength: 3
         }
     },
-    events(){
-        return Events.find({})
-    }
+    events: () =>
+        Events.find({})
+
 });
