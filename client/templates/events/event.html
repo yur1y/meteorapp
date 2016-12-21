@@ -1,43 +1,41 @@
 <template name="event">
     {{#each event}}
-    <div class="mdl-grid" >
-    <div class=" mdl-cell--8-col">
-        {{#if isOwner}}
+        <div class="mdl-grid">
+            <div class=" mdl-cell--8-col">
+                {{#if isOwner}}
 
-    <a href="{{pathFor 'eventEdit'}}" class="edit">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i class="material-icons">edit</i>event </button>
-    </a>
+                    <a href="{{pathFor 'eventEdit'}}" class="edit">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i
+                                class="material-icons">edit</i>event
+                        </button>
+                    </a>
 
-        {{/if}}
-            <br>
-            <table class="mdl-data-table mdl-shadow--2dp">
-                <thead>
-                <tr>
-                    <th >Name</th>
-                    <th>Time to event</th>
-                    <th>Created at</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td >{{name}}</td>
-                    <td>{{{timeleft}}}</td>
-                    <td>{{createdAt}}</td>
-                </tr>
+                {{/if}}
+                <br>
+                <table class="mdl-data-table mdl-shadow--2dp">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Time to event</th>
+                        <th>Created at</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{{timeleft}}}</td>
+                        <td>{{createdAt}}</td>
+                        <td>{{status}}</td>
+                    </tr>
 
-                </tbody>
-            </table>
-
-            <!--<div class="container">-->
-
-                <!--{{#each eventGroups}}-->
-                <!--{{#if groupEvent}}-->
-                <!--{{>groupTitle}}-->
-                    <!--{{/if}}-->
-                <!--{{/each}}-->
-            <!--</div>-->
-    </div>
-    </div>
+                    </tbody>
+                </table>
+                {{#each groupsIn}}
+                    {{>groupTitle}}
+                {{/each}}
+            </div>
+        </div>
 
     {{/each}}
 

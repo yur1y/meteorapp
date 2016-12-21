@@ -37,13 +37,12 @@ Meteor.methods({
                     url: getSlug(name),
                     open: open
                 }
-            }) : throwError('group name', 'group with the same name is already exists , try another name')
-    ,
+            }) : throwError('group name', 'group with the same name is already exists , try another name'),
     'groups.newLogo': (id, url) =>
         Groups.update({_id: id}, {$set: {logo: url}})
     ,
     'groups.noLogo': (id) =>
-        Groups.update({_id: id}, {$set: {logo: noLogo()}})
+        Groups.update({_id: id}, {$set: {logo: noLogo()}}),
 
 });
 

@@ -1,12 +1,21 @@
 <template name="account">
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
         <div class="mdl-tabs__tab-bar">
-            <a href="#account-panel" class="mdl-tabs__tab is-active">Account</a>
+            <a href="#events&groups-panel" class="mdl-tabs__tab">Events&Groups</a>
+            <a href="#account-panel" class="mdl-tabs__tab ">Account</a>
             <a href="#cart-panel" class="mdl-tabs__tab">Cart</a>
             <a href="#dashboard-panel" class="mdl-tabs__tab">Dashboard</a>
         </div>
+
+        <div class="mdl-tabs__panel  " id="events&groups-panel">
+            {{#each events}}
+            
+
+            {{/each}}
+
+        </div>
         {{#each userinfo}}
-            <div class="mdl-tabs__panel is-active" id="account-panel">
+            <div class="mdl-tabs__panel " id="account-panel">
                 <div class=" mdl-cell--6-col ">
                     {{>profile}}
                 </div>
@@ -32,6 +41,8 @@
                             <!--{{/if}}-->
                         </div>
                     </div>
+                        {{else}}
+                        <h6>empty,but you can add?)</h6>
                     {{/each}}
                 </div>
                 <div class=" mdl-cell--6-col">
@@ -61,6 +72,8 @@
                             <!--{{/if}}-->
                         </div>
                         </div>
+                        {{else}}
+                        <h6>empty,but you can add?)</h6>
                     {{/each}}
 
                 </div>

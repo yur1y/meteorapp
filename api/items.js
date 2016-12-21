@@ -118,24 +118,24 @@ Meteor.methods({
                         }
                     }
                 }) : Items.find({
-                    _id: itemId,
-                    'cart.user': userId,
-                    'cart.amount':amount
-                }).count() == 0?
+                _id: itemId,
+                'cart.user': userId,
+                'cart.amount': amount
+            }).count() == 0 ?
                 Items.update({                    //item is already in cart, but user change amount
                         _id: itemId,
                         'cart.user': userId,
                     }, {
                         $set: {'cart.$.amount': amount}
                     }
-                ):
-                    Items.update({                    //item is already in cart, so increment it
-                            _id: itemId,
-                            'cart.user': userId,
-                        }, {
-                            $inc: {'cart.$.amount':1}
-                        }
-                    ),
+                ) :
+                Items.update({                    //item is already in cart, so increment it
+                        _id: itemId,
+                        'cart.user': userId,
+                    }, {
+                        $inc: {'cart.$.amount': 1}
+                    }
+                ),
 
         'items.outCart': (itemId, userId) =>
             Items.update({_id: itemId}, {$pull: {cart: {user: userId}}}),

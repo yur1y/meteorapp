@@ -37,6 +37,6 @@ Template.itemCart.events({
             Meteor.call('items.inCart', this._id, Meteor.userId()
                 , Number(e.target.amount.value), (err, res) => {
                     res ? Meteor.call('ok', e.target.amount.value + '  ' + this.itemName + ' in the cart') : null
-                }) : throwError('item amount', 'there is no so much goods or you add all available goods to cart')
+                }) : throwError('item amount', ' you add all available goods to cart')
     }
 });

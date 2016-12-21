@@ -1,25 +1,77 @@
 <template name="eventEdit">
-    <div class="mdl-grid" >
-    <div class=" mdl-cell--8-col">
-    {{#each event}}
 
-        {{#if isOwner}}
-            <button class="back mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button"><i class="material-icons">keyboard_backspace</i>back</button>
+    <div class="mdl-grid">
+        <div class=" mdl-cell--12-col">
+            {{#each event}}
 
-                <form class="update">
-                    <div class="mdl-textfield mdl-js-textfield ">
-                        <input class="mdl-textfield__input " type="text"  value="{{name}}" name="name">
-                        <input class="mdl-textfield__input"  {{eventDate}} />
-                    </div>
+                {{#if isOwner}}
+                    <button class="back mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
+                        <i class="material-icons">keyboard_backspace</i>back
+                    </button>
 
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit"><i class="material-icons">done</i>Ok</button>
-                </form>
-            <button class="remove mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i class="material-icons">delete</i>delete</button>
+                    <form class="update">
+                        <div class="mdl-textfield mdl-js-textfield ">
+                            <input class="mdl-textfield__input " type="text" value="{{name}}" name="name">
 
-        {{else}} <div>only owner can view this </div>
-        {{/if}}
+                            <div class="newselect">
+                                <!-- Standard Select -->
+                                <div class="mdl-selectfield">
+                                    <select class="status" name="status" >
+                                        <option value="" disabled selected>Status :{{status}}</option>
+                                        <option value="ordering">Ordering</option>
+                                        <option value="ordered">Ordered</option>
+                                        <option value="delivering">Delivering</option>
+                                        <option value="delivered">Delivered</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--<div class="mdl-textfield__input">-->
+                                <!--<select class="mdl-selectfield__select" id="status" name="status">-->
+                                    <!--<option value="ordering">Ordering</option>-->
+                                    <!--<option value="ordering">Ordered</option>-->
+                                    <!--<option value="ordering">Delivering</option>-->
+                                    <!--<option value="ordering">Delivered</option>-->
+                                <!--</select>-->
+                                <!--<div class="mdl-selectfield__icon"><i class="material-icons">arrow_drop_down</i></div>-->
+                                <!--<label class="mdl-selectfield__label" for="status">Status</label>-->
+                            <!--</div>-->
 
-    {{/each}}
-    </div>
+                            <input  class="mdl-textfield__input" id="date-input"  {{eventDate}} />
+                        </div>
+
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
+                            <i class="material-icons">done</i>Ok
+                        </button>
+                    </form>
+                    <button class="remove mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i
+                            class="material-icons">delete</i>delete
+                    </button>
+
+                {{else}}
+                    <div>only owner can view this</div>
+                {{/if}}
+                <div class="inline" align="right">
+                    {{#each groups}}
+
+                        {{>groupTitle}}
+                        <button id="event-group-{{_id}}"
+                                class="event-group mdl-button mdl-js-button mdl-button--icon  mdl--ripple-effect">
+                            {{#if inEvent }}
+                                <i class="material-icons ">add</i>
+                                <div class="removeGroup mdl-tooltip mdl-tooltip--top "
+                                     data-mdl-for="event-group-{{_id}}">
+                                    <small> add to event</small>
+                                </div>
+                            {{else}}
+                                <i class="material-icons ">remove</i>
+                                <div class="mdl-tooltip mdl-tooltip--top " data-mdl-for="event-group-{{_id}}">
+                                    <small>remove from event</small>
+                                </div>
+                            {{/if}}
+                        </button>
+                    {{/each}}
+                </div>
+            {{/each}}
+        </div>
     </div>
 </template>

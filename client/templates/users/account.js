@@ -26,9 +26,7 @@ Template.account.helpers({
     },
     wished: Items.find({wish: Meteor.userId()})
     ,
-    inCart(){
-        return Items.find({'cart.user': Meteor.userId()});
-    }
+    inCart: Items.find({'cart.user': Meteor.userId()})
 });
 Template.account.events({
     'click .editUser'(e, temp){
@@ -46,6 +44,6 @@ Template.account.events({
         e.preventDefault();
 
         Meteor.call('items.outCart', this._id, Meteor.userId());
-        Meteor.call('ok',this.itemName + '  removed from cart');
+        Meteor.call('ok', this.itemName + '  removed from cart');
     }
 });

@@ -21,7 +21,7 @@ Template.event.helpers({
             moment(Template.instance().left.get()).preciseDiff(this.date) :
         '<p> event occured at:  ' + '<br>' + moment(this.date).format('MMMM Do YYYY, h:mm a') + '</p>';
     },
-    groups:() =>
-          Groups.find({})
-
+    groupsIn(){
+        return Groups.find({_id:{$all:this.groups}})
+    }
 });
