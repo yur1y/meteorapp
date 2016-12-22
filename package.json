@@ -5,6 +5,7 @@
     "start": "meteor run --settings settings.json"
   },
   "dependencies": {
+    "lodash": "^4.17.2",
     "meteor-node-stubs": "~0.2.0"
   }
 }

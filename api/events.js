@@ -15,7 +15,7 @@ Meteor.methods({
                 name: name,
                 createdAt: moment().format('MMMM Do YYYY, h:mm a'),
                 url: getSlug(name),
-                owner: this.userId,
+                owner: Meteor.userId(),
                 status: 'no group added',
                 groups: [],
                 confirmed:[],

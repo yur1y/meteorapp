@@ -11,10 +11,11 @@
 
                     <form class="update">
                         <div class="mdl-textfield mdl-js-textfield ">
-                            <input class="mdl-textfield__input " type="text" value="{{name}}" name="name">
-
+                            <input class="mdl-textfield__input " type="text" value="{{name}}" name="name" id="name">
+                            <label class="mdl-textfield__label" for="name">Name...</label>
+                        </div>
                             <div class="newselect">
-                                <!-- Standard Select -->
+
                                 <div class="mdl-selectfield">
                                     <select class="status" name="status" >
                                         <option value="" disabled selected>Status :{{status}}</option>
@@ -25,27 +26,20 @@
                                     </select>
                                 </div>
                             </div>
-                            <!--<div class="mdl-textfield__input">-->
-                                <!--<select class="mdl-selectfield__select" id="status" name="status">-->
-                                    <!--<option value="ordering">Ordering</option>-->
-                                    <!--<option value="ordering">Ordered</option>-->
-                                    <!--<option value="ordering">Delivering</option>-->
-                                    <!--<option value="ordering">Delivered</option>-->
-                                <!--</select>-->
-                                <!--<div class="mdl-selectfield__icon"><i class="material-icons">arrow_drop_down</i></div>-->
-                                <!--<label class="mdl-selectfield__label" for="status">Status</label>-->
-                            <!--</div>-->
 
-                            <input  class="mdl-textfield__input" id="date-input"  {{eventDate}} />
+                        <div class="mdl-textfield mdl-js-textfield">
+
+                            <input  class="mdl-textfield__input datetimepicker" id="date-input"  {{eventDate}} />
                         </div>
-
+                         <br>
+                        <button class="remove mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i
+                                class="material-icons">delete</i>delete
+                        </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
                             <i class="material-icons">done</i>Ok
                         </button>
                     </form>
-                    <button class="remove mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i
-                            class="material-icons">delete</i>delete
-                    </button>
+
 
                 {{else}}
                     <div>only owner can view this</div>

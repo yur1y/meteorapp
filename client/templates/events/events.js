@@ -8,11 +8,7 @@ Template.events.events({
         event.preventDefault();
 
 
-        Meteor.call('events.insert',  e.target.name.value,function (err, res) {
-            return  err ? null
-                : Meteor.call('ok', 'Event  ' +
-                e.target.name.value+ ' created')
-        });
+        Meteor.call('events.insert',  e.target.name.value);
 
     },
     'click .delete'(e){

@@ -14,7 +14,7 @@ Template.event.helpers({
     event: () => Events.find({})
     ,
     isOwner(){
-        return this.owner == Meteor.userId()
+        return this.owner == Meteor.userId();
     },
     timeleft(){
         return new Date(this.date) - new Date() > 0 ?

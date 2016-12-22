@@ -24,7 +24,6 @@ i.home {
 
 .main {
     margin: 0 auto;
-    /*align-items: center;*/
     text-align: center;
 
 }
@@ -74,10 +73,8 @@ div::-webkit-scrollbar {
 }
 
 .inline {
-    /*position: relative;*/
     display: inline-flex;
     margin-bottom: 5%;
-    /*float: left;*/
     left: 30px;
 }
 
@@ -114,14 +111,13 @@ input[type=number] {
 /*MDL Style Select Field */
 select {
     font-family: inherit;
-    background-color: transparent;
+    background-color: #FAFAFA;
     width: 200%;
-    /*padding: 5px 50%;*/
+
     font-size: 16px;
     color: rgb(0, 0, 0);
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    /*float: none;*/
 }
 
 /* Remove focus */
@@ -132,6 +128,7 @@ select:focus {
 /* Hide label */
 .mdl-selectfield label {
     display: none;
+
 }
 
 /* Use custom arrow */
@@ -141,17 +138,18 @@ select:focus {
 }
 
 .mdl-selectfield {
-    position: absolute;
+    position: relative;
     padding-left: 0;
     width: 150px;
+
 }
 
+/* Styling the down arrow */
 .mdl-selectfield:after {
     position: absolute;
     top: .25em;
     right: 0;
     left: 280px;
-    /* Styling the down arrow */
     width: 0;
     height: 0;
     padding: 0;
@@ -160,16 +158,20 @@ select:focus {
     border-right: .5em solid transparent;
     border-top: .5em solid rgba(0, 0, 0, 0.12);
     pointer-events: none;
+
 }
 
 .newselect {
     width: 200px;
-    padding-top: 38px;
-    padding-bottom: 38px;
-    /*margin: 0;*/
-    /*top: 50%;*/
+    padding-top: 25px;
     margin-top: -2em;
     position: relative;
     right: 0;
     left: 0;
+}
+
+.datetimepicker-widget{
+    position: absolute;
+    z-index: 8;
+    background: #FAFAFA;
 }
