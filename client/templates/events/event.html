@@ -1,9 +1,8 @@
 <template name="event">
-    {{#each event}}
-        <div class="mdl-grid">
-            <div class=" mdl-cell--8-col">
+    <div class="mdl-grid ">
+        <div class=" mdl-cell mdl-cell--8-col main">
+            {{#each event}}
                 {{#if isOwner}}
-
                     <a href="{{pathFor 'eventEdit'}}" class="edit">
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                             <i class="material-icons">edit</i>event
@@ -11,6 +10,17 @@
                     </a>
 
                 {{/if}}
+                <div class="confirmation">
+                    <button class="mdl-button yes mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        <i class="material-icons">thumb_up</i>Confirm
+                    </button>
+                    <button class="mdl-button not-now mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        <i class="material-icons">thumbs_up_down</i>Just Watching
+                    </button>
+                    <button class="mdl-button no mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        <i class="material-icons">thumb_down</i>Leave event
+                    </button>
+                </div>
                 <br>
                 <table class="mdl-data-table mdl-shadow--2dp">
                     <thead>
@@ -28,15 +38,116 @@
                         <td>{{createdAt}}</td>
                         <td>{{status}}</td>
                     </tr>
-
                     </tbody>
                 </table>
-                {{#each groupsIn}}
-                    {{>groupTitle}}
-                {{/each}}
-            </div>
+            {{/each}}
         </div>
 
-    {{/each}}
+        <div class=" mdl-cell mdl-cell--8-col main">
+            <h5>Groups in event:</h5>
+            {{#each groups}}
+                {{#if isInEvent}}
+                    {{>groupTitle}}
+                {{/if}}
+            {{/each}}
+        </div>
+        <div class=" mdl-cell mdl-cell--8-col main">
+            {{#if isConfirmed}}
+                <h5>Items to order:</h5>
+                {{#each itemsToOrder}}
+                    <div class="mdl-cell mdl-cell--3-col-tablet inline ">
+                        <div class="stitched"><img height="100" width="100" src="{{url}}">
+                            <p>name: {{itemName}}</p>
+                            <p>ordered: {{itemAmount}}</p>
+                            <p class="inline radio">Pay by:
+                                <label class=" mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-0-{{_id}}">
+                                    <input type="radio" disabled={{canPay.a}} id="option-0-{{_id}}"
+                                           class="mdl-radio__button"
+                                           name="options-{{_id}}" value="0" checked={{check.a}}>
 
+                                    <span class="mdl-radio__label"><i class="material-icons">attach_money</i></span>
+                                </label>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1-{{_id}}">
+                                    <input type="radio" disabled={{canPay.b}} id="option-1-{{_id}}"
+                                           class="mdl-radio__button"
+                                           name="options-{{_id}}" value="1" checked={{check.b}}>
+
+                                    <span class="mdl-radio__label">
+                                        <i class="material-icons">payment</i></span>
+                                </label>
+                                <label hidden class="mdl-radio mdl-js-radio " for="option-2-{{_id}}">
+                                    <input type="radio" id="option-2-{{_id}}"
+                                           class="mdl-radio__button"
+                                           name="options-{{_id}}">
+                                </label>
+                            </p>
+                            <p class="toPay{{_id}}"></p>
+                        </div>
+                    </div>
+                {{else}}
+                    <p>No items</p>
+                {{/each}}
+            {{else}}
+                <p>tip:Confirm to proceed ordering goods<br>
+                    or unconfirm to quit event</p>
+            {{/if}}
+        </div>
+        <div class=" mdl-cell mdl-cell--8-col main">
+            <p>Cash to pay: {{total.cash}} <i class="material-icons">attach_money</i> Coupons to pay: {{total.coupons}}
+                <i class="material-icons">payment</i>
+                {{#if isConfirmed}}
+
+                    {{#if canPay.c}}<!--// return 'disabled string'-->
+
+                    {{else}}
+
+
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect order-dialog">
+                            <i class="material-icons">done_all</i>Order
+                        </button>
+                    {{/if}}
+                {{/if}}
+            </p>
+        </div>
+        <div>
+            <dialog class="mdl-dialog" id="order-dialog">
+
+                <h4 class="mdl-dialog__title">Orderin ...</h4>
+                <p> everything is very serious.. so.. if you here.. choose delivery type</p>
+                <div class="mdl-dialog__content">
+                    <div class="newselect ordering-select">
+                        <div class="mdl-selectfield ordering">
+                            <select class="delivery" name="delivery">
+                                <option selected disabled></option>
+                                <option value="0">None, 0$</option>
+                                <option value="5">Our delivery guy,5$</option>
+                                <option value="50">Spider-man,50$</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mdl-dialog__actions--full-width mdl-dialog__actions">
+                        {{#if canOrder}}
+                            <p>Cost: {{total.cash}}$ + {{total.coupons}} coupons </p>
+                            <p>delivery: {{delivery}} $ </p>
+                            <p>Total cash:{{totalCashwithDel }} $</p>
+                            <button class="mdl-button  mdl-js-button mdl-js-ripple-effect  order" type="submit">
+                                <i class="material-icons">done</i>Order
+                            </button>
+                        {{/if}}
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="check-email">
+                            <input type="checkbox" id="check-email" class="mdl-checkbox__input" name="email"/>
+                            <span class="mdl-checkbox__label"><i
+                                    class="material-icons">email</i> Get cheque email?</span>
+                        </label>
+
+                        <button type="button"
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect  cancel">
+                            <i class="material-icons">cancel</i> Cancel
+                        </button>
+                    </div>
+                </div>
+
+            </dialog>
+        </div>
+    </div>
 </template>

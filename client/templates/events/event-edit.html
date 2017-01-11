@@ -3,19 +3,16 @@
     <div class="mdl-grid">
         <div class=" mdl-cell--12-col">
             {{#each event}}
-
                 {{#if isOwner}}
                     <button class="back mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button">
                         <i class="material-icons">keyboard_backspace</i>back
                     </button>
-
                     <form class="update">
                         <div class="mdl-textfield mdl-js-textfield ">
                             <input class="mdl-textfield__input " type="text" value="{{name}}" name="name" id="name">
                             <label class="mdl-textfield__label" for="name">Name...</label>
                         </div>
                             <div class="newselect">
-
                                 <div class="mdl-selectfield">
                                     <select class="status" name="status" >
                                         <option value="" disabled selected>Status :{{status}}</option>
@@ -26,9 +23,7 @@
                                     </select>
                                 </div>
                             </div>
-
                         <div class="mdl-textfield mdl-js-textfield">
-
                             <input  class="mdl-textfield__input datetimepicker" id="date-input"  {{eventDate}} />
                         </div>
                          <br>
@@ -39,15 +34,14 @@
                             <i class="material-icons">done</i>Ok
                         </button>
                     </form>
-
-
                 {{else}}
                     <div>only owner can view this</div>
                 {{/if}}
-                <div class="inline" align="right">
+                <div >
                     {{#each groups}}
 
                         {{>groupTitle}}
+
                         <button id="event-group-{{_id}}"
                                 class="event-group mdl-button mdl-js-button mdl-button--icon  mdl--ripple-effect">
                             {{#if inEvent }}

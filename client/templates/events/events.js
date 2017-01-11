@@ -8,7 +8,8 @@ Template.events.events({
         event.preventDefault();
 
 
-        Meteor.call('events.insert',  e.target.name.value);
+        Meteor.call('events.insert', e.target.name.value, () => {
+        });
 
     },
     'click .delete'(e){
@@ -27,6 +28,5 @@ Template.events.helpers({
         }
     },
     events: () =>
-        Events.find({})
-
+        Events.find({$or: [{owner: Meteor.userId()}, {'confirm.user': Meteor.userId()}]})
 });

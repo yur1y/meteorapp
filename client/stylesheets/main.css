@@ -48,12 +48,6 @@ div::-webkit-scrollbar {
     color: #FAFAFA;
 }
 
-.noLogo {
-    position: inherit;
-    left: 300px;
-    top: 0;
-}
-
 .mdl-layout {
     width: 100%;
 }
@@ -62,6 +56,11 @@ div::-webkit-scrollbar {
     position: relative;
     top: 30px;
     left: 90px;
+    outline: none;
+}
+
+#replace-logo {
+    outline: none;
 }
 
 .new-item {
@@ -94,7 +93,7 @@ input[type=number] {
 }
 
 .stitched {
-    height: 200px;
+    height: 230px;
     width: 150px;
     padding: 20px;
     margin: 50px;
@@ -103,8 +102,7 @@ input[type=number] {
     line-height: 1.3em;
     border: 2px dashed #fff;
     border-radius: 10px;
-    box-shadow: 0 0 0 4px #FFFBFF, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
-    text-shadow: -1px -1px #FFFBFF;
+    box-shadow: 0 0 0 4px #FFFBFF, 2px 1px 4px 4px rgba(10, 10, 0, 0.5);
     font-weight: lighter;
 }
 
@@ -113,7 +111,6 @@ select {
     font-family: inherit;
     background-color: #FAFAFA;
     width: 200%;
-
     font-size: 16px;
     color: rgb(0, 0, 0);
     border: none;
@@ -149,7 +146,7 @@ select:focus {
     position: absolute;
     top: .25em;
     right: 0;
-    left: 280px;
+    left: 286px;
     width: 0;
     height: 0;
     padding: 0;
@@ -158,7 +155,6 @@ select:focus {
     border-right: .5em solid transparent;
     border-top: .5em solid rgba(0, 0, 0, 0.12);
     pointer-events: none;
-
 }
 
 .newselect {
@@ -170,8 +166,15 @@ select:focus {
     left: 0;
 }
 
-.datetimepicker-widget{
+.datetimepicker-widget {
     position: absolute;
     z-index: 8;
     background: #FAFAFA;
+}
+
+.ordering{
+    width: 110px;
+}
+.ordering:after{
+    left: 220px;
 }

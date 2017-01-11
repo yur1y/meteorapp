@@ -1,7 +1,10 @@
 import {Template} from 'meteor/templating';
 import {Meteor} from 'meteor/meteor';
 import {ReactiveVar} from 'meteor/reactive-var'
+
 import {Items} from '../../../api/items';
+import {Groups} from '../../../api/groups';
+import {Events} from '../../../api/events';
 
 Template.account.onCreated(function () {
     this.editUser = new ReactiveVar();
@@ -14,19 +17,30 @@ Template.account.helpers({
     userinfo: Meteor.users.find({_id: Meteor.userId()})
     ,
     isAdmin(){
-        return this.roles.indexOf('admin') > -1;
+        if (Meteor.userId()) {
+            let user = Meteor.users.findOne(Meteor.userId, {fields: {roles: 1}});
+            return user.roles.indexOf('admin') > -1;
+        } else return false;
     },
     allUsers(){
         return Template.instance().editUser.get() != null ? Meteor.users.find
         ({_id: Template.instance().editUser.get()}) : Meteor.users.find({});
-
     },
     showUser(){
         return Template.instance().editUser.get() == this._id;
     },
-    wished: Items.find({wish: Meteor.userId()})
-    ,
-    inCart: Items.find({'cart.user': Meteor.userId()})
+    wished: Items.find({wish: Meteor.userId()}),
+
+    inCart: Items.find({'cart.user': Meteor.userId()}),
+    groups(){
+        return Groups.find({users: Meteor.userId()})
+    },
+    toConfirm(){
+        return Events.find({'confirm.user': Meteor.userId(), 'confirm.answer': false})
+    },
+    confirmed(){
+        return Events.find({'confirm.user': Meteor.userId(), 'confirm.answer': true})
+    }
 });
 Template.account.events({
     'click .editUser'(e, temp){

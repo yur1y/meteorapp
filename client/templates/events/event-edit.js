@@ -15,16 +15,12 @@ Template.eventEdit.onCreated(function () {
 
 Template.eventEdit.onRendered(function () {
     this.$('.datetimepicker').datetimepicker({
-        format: 'YYYY-MM-DDTHH:mm',
+        format: 'MMMM DD, YYYY HH:mm',
         minDate: moment().format('YYYY-MM-DDTHH:mm'), //datetime-local format
         icons:{
             time: ' access_time ',
             date:' event '
-        },
-        viewDate:moment(),
-        // locale:moment.locale('ua')
-        showTodayButton: false
-    // MMM dd, yyyy hh:mm:ssa
+        }
     });
 });
 
@@ -46,8 +42,6 @@ Template.eventEdit.helpers({
     inEvent(){
         return Template.instance().eventGroup.get().indexOf(this._id) == -1
     }
-
-
 });
 
 Template.eventEdit.events({
@@ -64,8 +58,12 @@ Template.eventEdit.events({
     'click .event-group'(e, temp){
         e.preventDefault();
 
-        Meteor.call('events.group', temp.eventId.get(), this._id)
-    },
+        Meteor.call('events.group', temp.eventId.get(), this._id);
+        temp.eventGroup.get().indexOf(this._id) == -1?
+            Meteor.call('events.confirm',temp.eventId.get(),this.users,false): //ask users to confirm group
+            Meteor.call('events.unConfirm',temp.eventId.get(),this.users)
+
+       },
     'click .remove'(e){
         e.preventDefault();
         Meteor.call('events.remove', this._id);

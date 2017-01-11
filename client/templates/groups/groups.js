@@ -7,8 +7,7 @@ Template.groups.events({
 
     'submit .new-group'(e){
         e.preventDefault();
-        Meteor.call('groups.insert', e.target.name.value, function (err, res) {
-            return err ? err : null
+        Meteor.call('groups.insert', e.target.name.value, function () {
         });
     }
 });

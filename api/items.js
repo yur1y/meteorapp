@@ -2,7 +2,7 @@ import {Meteor} from 'meteor/meteor';
 import {UploadFS} from 'meteor/jalik:ufs';
 import {Mongo} from 'meteor/mongo';
 
-import {throwError} from '../lib/helpers';
+import {throwError, totalCost, userAmount} from '../lib/helpers';
 
 export const Items = new Mongo.Collection('items');
 
@@ -48,76 +48,74 @@ if (Meteor.isServer) {
     });
 }
 Meteor.methods({
-        'items.insert': (url, name, cash, amount) =>
-            Meteor.isClient ?
-                UploadFS.selectFile(function (file) {
-                    let info = {
-                        name: file.name,
-                        size: file.size,
-                        createdAt: moment().format('MMMM Do YYYY, h:mm a'),
-                        owner: Meteor.userId(),
-                        itemUrl: url
-                    };
-                    if (amount) {
-                        info.itemName = name;
-                        info.amount = amount;
-                        info.cash = cash;
-                        info.coupons = null;
-                        info.wish = [];
-                        // info.cart = {user: null, amount: null, cash: null, coupons: null, total: null}; //
-                    }
-                    const ONE_MB = 1024 * 1024;
-                    let uploader = new UploadFS.Uploader({
-                        adaptive: true,
-                        chunkSize: ONE_MB,
-                        maxChunkSize: ONE_MB * 2,
-                        data: file,
-                        file: info,
-                        store: ItemStore || 'items',
-                        maxTries: 3,
-                        maxSize: ONE_MB,
-                        onComplete(file) {
-                            return !file.itemName ? [
+    'items.insert': (url, name, cash, amount) =>
+        Meteor.isClient ?
+            UploadFS.selectFile(function (file) {
+                let info = {
+                    name: file.name,
+                    size: file.size,
+                    createdAt: moment().format('MMMM Do YYYY, h:mm a'),
+                    owner: Meteor.userId(),
+                    itemUrl: url
+                };
+                if (amount) {
+                    info.itemName = name;
+                    info.amount = amount;
+                    info.cash = cash;
+                    info.coupons = null;
+                    info.wish = [];
+                }
+                const ONE_MB = 1024 * 1024;
+                let uploader = new UploadFS.Uploader({
+                    adaptive: true,
+                    chunkSize: ONE_MB,
+                    maxChunkSize: ONE_MB * 2,
+                    data: file,
+                    file: info,
+                    store: ItemStore || 'items',
+                    maxTries: 3,
+                    maxSize: ONE_MB,
+                    onComplete(file) {
+                        return !file.itemName ? [
                                 Meteor.call('items.remove', cash),
                                 Meteor.call('groups.newLogo', name, file.url),
                                 Meteor.call('ok', 'logo changed')
                             ] : Meteor.call('ok', 'item ' + file.itemName + ' created');
-
-                        },
-                        onError(err){
-                            return err ? throwError(err.err, err.reason) : null
-                        }
-                    });
-                    uploader.start();
-                }) : null,
-
-        'items.remove': (filter) =>
-            Items.remove({$or: [{_id: filter}, {itemUrl: filter}, {url: filter}]}),
-
-        'items.update': (id, name, cash, amount, coupons) =>
-            Items.update({_id: id}, {$set: {itemName: name, cash: cash, amount: amount, coupons: coupons}})
-        ,
-        'items.wish': (itemId, userId) =>
-
-            !Items.find({_id: itemId, wish: userId}).count() ?
-
-                Items.update({_id: itemId}, {$addToSet: {wish: userId}}) : //wish
-
-                Items.update({_id: itemId}, {$pull: {wish: userId}}), //un-wish
-
-        'items.inCart': (itemId, userId, amount) =>
-            Items.find({
-                _id: itemId,
-                'cart.user': userId,
-            }).count() == 0 ?
-                Items.update({_id: itemId}, {  //item added first time by user
-                    $push: {
-                        cart: {
-                            user: userId,
-                            amount: amount
-                        }
+                    },
+                    onError(err){
+                        return err ? throwError(err.err, err.reason) : null
                     }
-                }) : Items.find({
+                });
+                uploader.start();
+            }) : null,
+
+    'items.remove': (filter) =>
+        Items.remove({$or: [{_id: filter}, {itemUrl: filter}, {url: filter}]}),
+
+    'items.update': (id, name, cash, amount, coupons) =>
+        Items.update({_id: id}, {$set: {itemName: name, cash: cash, amount: amount, coupons: coupons}})
+    ,
+    'items.wish': (itemId, userId) =>
+
+        !Items.find({_id: itemId, wish: userId}).count() ?
+
+            Items.update({_id: itemId}, {$addToSet: {wish: userId}}) : //wish
+
+            Items.update({_id: itemId}, {$pull: {wish: userId}}), //un-wish
+
+    'items.inCart': (itemId, userId, amount) =>
+        Items.find({
+            _id: itemId,
+            'cart.user': userId,
+        }).count() == 0 ?
+            Items.update({_id: itemId}, {  //item added first time by user
+                $push: {
+                    cart: {
+                        user: userId,
+                        amount: amount
+                    }
+                }
+            }) : Items.find({
                 _id: itemId,
                 'cart.user': userId,
                 'cart.amount': amount
@@ -137,19 +135,44 @@ Meteor.methods({
                     }
                 ),
 
-        'items.outCart': (itemId, userId) =>
-            Items.update({_id: itemId}, {$pull: {cart: {user: userId}}}),
+    'items.outCart': (itemId, userId) =>
+        Items.update({_id: itemId}, {$pull: {cart: {user: userId}}}),
 
-        'items.preOrder': (itemId, userId, amount, cash, coupons) =>
-            Items.update({_id: itemId}, {
-                $addToSet: {
-                    cart: [{
-                        user: userId,
-                        amount: amount,
-                        cash: cash,         //cash cost
-                        coupons: coupons,   //  coupons cost
-                    }]
+    'items.payBy': (itemId, userId, payBy) => {
+        typeof(itemId) == 'string' ? itemId = [itemId] : null;
+        for (let i = 0; i < itemId.length; i++) {
+
+            Items.update({_id: itemId[i], 'cart.user': userId}, {
+                $set: {
+                    'cart.$.payBy': payBy,         //pre-pay
+
                 }
             })
+        }
+    },
+    'items.notPay': (itemId, userId) => {
+        typeof(itemId) == 'string' ? itemId = [itemId] : null;
+        for (let i = 0; i < itemId.length; i++) {
+
+            Items.update({_id: itemId[i], 'cart.user': userId}, {
+                $unset: {
+                    'cart.$.payBy': {$exists: true}          //undo-pre-pay
+                }
+            })
+        }
+    },
+    'items.order': (itemId, userId,ownerId) => {
+        typeof(itemId) == 'string' ? itemId = [itemId] : null;
+        for (let i = 0; i < itemId.length; i++) {
+
+            Items.update({_id: itemId[i], 'cart.user': userId}, {
+                $set: {
+                    'cart.$.ordered': true          //pre-pay
+                },
+                $inc: {amount: -userAmount(itemId[i], userId)}
+            });
+            Meteor.call('users.order', userId,ownerId, totalCost(userId, itemId[i]).cash,
+                totalCost(userId, itemId[i]).coupons); //cash & coupons used
+        }
     }
-);
+});

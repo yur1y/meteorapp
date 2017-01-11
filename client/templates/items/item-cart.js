@@ -1,7 +1,7 @@
 import {Template} from 'meteor/templating';
 import {Meteor} from 'meteor/meteor';
-import {Items} from '../../../api/items';
-import {throwError} from '../../../lib/helpers';
+
+import {throwError, userAmount} from '../../../lib/helpers';
 
 Template.itemCart.helpers({
     wished(){
@@ -10,17 +10,8 @@ Template.itemCart.helpers({
     inCart(){
         return this.cart.user.indexOf(Meteor.userId()) > -1
     },
-    userAmount(){
-        let item = Items.findOne({_id: this._id, 'cart.user': Meteor.userId()});
-        let amount = '';
-        item ?
-            item.cart.filter(function (cart) {
-                    cart.user == Meteor.userId() ?
-                        amount = Number(cart.amount) : amount = 1
-                }
-            ) : amount = 1;
-
-        return amount < 1 ? 1 : amount;
+    itemAmount(){
+        return userAmount(this._id,Meteor.userId())
     }
 });
 

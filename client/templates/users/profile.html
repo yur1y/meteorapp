@@ -1,14 +1,14 @@
 <template name="profile">
 
     <div class="mdl-cell mdl-cell--1-col-tablet ">
-        {{#if services.google.picture}}
-            <img src="{{services.google.picture}}" width="50">
+        {{#if services.google}}
+            <img src="{{services.google.picture}}" width="75">
 
         {{else}}
-            <img src="{{services.vk.photo_big}}" width="50">
+            <img src="{{services.vk.photo_big}}" width="75">
 
         {{/if}}
-            <p>{{profile.name }}</p>
+            <h5>{{profile.name }}</h5>
 
     </div>
 

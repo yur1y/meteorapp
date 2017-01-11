@@ -1,23 +1,43 @@
 <template name="account">
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
         <div class="mdl-tabs__tab-bar">
-            <a href="#events&groups-panel" class="mdl-tabs__tab">Events&Groups</a>
+            <a href="#events-panel" class="mdl-tabs__tab is-active">Events&Groups</a>
             <a href="#account-panel" class="mdl-tabs__tab ">Account</a>
             <a href="#cart-panel" class="mdl-tabs__tab">Cart</a>
-            <a href="#dashboard-panel" class="mdl-tabs__tab">Dashboard</a>
+          {{#if isAdmin}}     <a href="#dashboard-panel" class="mdl-tabs__tab">Dashboard</a> {{/if}}
         </div>
 
-        <div class="mdl-tabs__panel  " id="events&groups-panel">
-            {{#each events}}
-            
+        <div class="mdl-tabs__panel is-active  " id="events-panel">
+            <div class="mdl-grid">
+                <div class=" mdl-cell--4-col ">
+               <h5>Your groups</h5>
+                {{#each groups}}
+                    {{>groupTitle}}
+                {{/each}}
+                </div>
+                <div class=" mdl-cell--4-col ">
+                    <h5>Not Confirmed events</h5>
+                        {{#each toConfirm}}
+                            {{>eventName}}
+                        {{/each}}
+                    </div>
 
-            {{/each}}
+                    <div class=" mdl-cell--4-col ">
+                        <h5>Confirmed events</h5>
+                        {{#each confirmed}}
+                            {{>eventName}}
+                        {{/each}}
+
+                    </div>
+            </div>
 
         </div>
         {{#each userinfo}}
             <div class="mdl-tabs__panel " id="account-panel">
                 <div class=" mdl-cell--6-col ">
                     {{>profile}}
+                    <h5>Cash: {{wallet.cash}}</h5>
+                    <h5>Coupons: {{wallet.coupons}}</h5>
                 </div>
             </div>
         {{/each }}
@@ -26,22 +46,22 @@
                 <div class="  mdl-cell--6-col">
                     <h5>Wish List</h5>
                     {{#each wished}}
-                    <div class="stitched">
+                        <div class="stitched">
 
-                        <img height="100" width="100" src="{{url}}">
-                        <p>name: {{itemName}}</p>
-                        <p> price: {{cash}} $</p>
-                        <p> {{#if coupons}}
-                            Coupons price:{{coupons}}
-                        {{/if}}</p>
-                        <div class="inline">
-                            {{>itemCart}}
-                            <!--{{#if isOwner}}-->
+                            <img height="100" width="100" src="{{url}}">
+                            <p>name: {{itemName}}</p>
+                            <p> price: {{cash}} $</p>
+                            <p> {{#if coupons}}
+                                Coupons price:{{coupons}}
+                            {{/if}}</p>
+                            <div class="inline">
+                                {{>itemCart}}
+                                    <!--{{#if isOwner}}-->
                                 <!--{{>itemEdit}}-->
-                            <!--{{/if}}-->
+                                    <!--{{/if}}-->
+                            </div>
                         </div>
-                    </div>
-                        {{else}}
+                    {{else}}
                         <h6>empty,but you can add?)</h6>
                     {{/each}}
                 </div>
@@ -51,28 +71,28 @@
 
                         <div class="stitched ">
 
-                        <img height="100" width="100" src="{{url}}">
-                        <p>name: {{itemName}}</p>
-                        <p> price: {{cash}} $</p>
-                        <p> {{#if coupons}}
-                            Coupons price:{{coupons}}
-                        {{/if}}</p>
-                        <div class="inline">
+                            <img height="100" width="100" src="{{url}}">
+                            <p>name: {{itemName}}</p>
+                            <p> price: {{cash}} $</p>
+                            <p> {{#if coupons}}
+                                Coupons price:{{coupons}}
+                            {{/if}}</p>
+                            <div class="inline">
 
-                            {{>itemCart}}
-                            <button type="button" id="remove-cart{{_id}}"
-                                    class="mdl-button mdl-js-button  mdl-button--icon">
-                                <i class="material-icons out-cart">remove_shopping_cart</i>
-                            </button>
-                            <div class="mdl-tooltip mdl-tooltip--top " data-mdl-for="remove-cart{{_id}}">
-                                remove from cart
-                            </div>
-                            <!--{{#if isOwner}}-->
+                                {{>itemCart}}
+                                <button type="button" id="remove-cart{{_id}}"
+                                        class="mdl-button mdl-js-button  mdl-button--icon">
+                                    <i class="material-icons out-cart">remove_shopping_cart</i>
+                                </button>
+                                <div class="mdl-tooltip mdl-tooltip--top " data-mdl-for="remove-cart{{_id}}">
+                                    remove from cart
+                                </div>
+                                    <!--{{#if isOwner}}-->
                                 <!--{{>itemEdit}}-->
-                            <!--{{/if}}-->
+                                    <!--{{/if}}-->
+                            </div>
                         </div>
-                        </div>
-                        {{else}}
+                    {{else}}
                         <h6>empty,but you can add?)</h6>
                     {{/each}}
 
@@ -81,39 +101,42 @@
         </div>
 
         <div class="mdl-tabs__panel" id="dashboard-panel">
-            {{#each userinfo}}
-                {{#if isAdmin}}
-                    <div class="mdl-cell mdl-cell--6-col">
-                        <h3>Users panel</h3>
+            {{#if isAdmin}}    <h3>Users panel</h3>{{/if}}
+            <div class="mdl-grid">
+                {{#each userinfo}}
+                    {{#if isAdmin}}
                         {{#each allUsers}}
-
-                            {{>profile}}
-                            <button class="editUser mdl-button mdl-js-button mdl-js-ripple-effect" type="button">edit
-                                user
-                            </button>
-                            {{#if showUser}}
-                                <form class=" update">
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class=" mdl-textfield__input " type="number" min="{{wallet.cash}}"
-                                               value="{{wallet.cash}}" name="cash" id="iCash"/>
-                                        <label class="mdl-textfield__label" for="iCash"> cash</label>
-                                    </div>
-                                    <br>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class=" mdl-textfield__input " type="number" min="{{wallet.coupons}}"
-                                               value="{{wallet.coupons}}" name="coupons" id="iCoupons"/>
-                                        <label class="mdl-textfield__label" for="iCoupons"> coupons</label>
-                                    </div>
-                                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect"
-                                            type="submit">
-                                        <i class="material-icons">done</i>ok
-                                    </button>
-                                </form>
-                            {{/if}}
+                            <div class="fixed mdl-cell mdl-cell--4-col">
+                                {{>profile}}
+                                <button class="editUser mdl-button mdl-js-button mdl-js-ripple-effect" type="button">
+                                    edit
+                                    user
+                                </button>
+                                {{#if showUser}}
+                                    <form class=" update">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <input class=" mdl-textfield__input " type="number" min="{{wallet.cash}}"
+                                                   value="{{wallet.cash}}" name="cash" id="iCash"/>
+                                            <label class="mdl-textfield__label" for="iCash"> cash</label>
+                                        </div>
+                                        <br>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <input class=" mdl-textfield__input " type="number" min="{{wallet.coupons}}"
+                                                   value="{{wallet.coupons}}" name="coupons" id="iCoupons"/>
+                                            <label class="mdl-textfield__label" for="iCoupons"> coupons</label>
+                                        </div>
+                                        <button class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                                                type="submit">
+                                            <i class="material-icons">done</i>ok
+                                        </button>
+                                    </form>
+                                {{/if}}
+                            </div>
                         {{/each}}
-                    </div>
-                {{/if}}
-            {{/each}}
+
+                    {{/if}}
+                {{/each}}
+            </div>
         </div>
     </div>
 </template>

@@ -32,7 +32,7 @@ Meteor.publish('users', function () {
         Meteor.users.find({}, {
             fields: {
                 'profile.name': 1, 'services.vk.photo_big': 1, 'services.google.picture': 1,
-                groups: 1, items: 1, 'status.online': 1, roles: 1
+                groups: 1, wallet: 1, roles: 1
             }
         })
         : this.ready();

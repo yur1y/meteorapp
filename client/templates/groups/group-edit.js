@@ -82,9 +82,10 @@ Template.groupEdit.events({
 
     'click .noLogo'(e){
         e.preventDefault();
-         this.logo != noLogo()?(
+        return this.logo != noLogo()?[
             Meteor.call('items.remove', this.logo),
-            Meteor.call('groups.noLogo', this._id)
-    ):Meteor.call('ok', 'no logo')
+            Meteor.call('groups.noLogo', this._id),
+             Meteor.call('ok', 'no logo')
+    ]:null
     }
 });

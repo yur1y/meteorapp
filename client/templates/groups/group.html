@@ -15,7 +15,7 @@
             {{/if}}
             <div class="mdl-cell"><img src="{{logo}}" height="175"></div>
 
-            <div class="mdl-cell mdl-cell--6-col ">
+            <div class="mdl-cell mdl-cell-2--col ">
 
                 <h5>Name:  {{name}}</h5>
                 <h5>Status: {{#if open}}
@@ -28,12 +28,12 @@
             {{/each}}</h5>
         </div>
 
-        <div class="mdl-cell mdl-cell--6-col">
-            {{#if usersIn}}<p>Users in group:</p> {{/if}}
+        <div class="mdl-cell mdl-cell-3--col">
+            {{#if usersIn}}<h5>Users in group:</h5> {{/if}}
             {{#each usersIn  }}
                 {{>profile}}
 
-            {{else}} <p>no users</p>
+            {{else}} <h5>no users</h5>
             {{/each}}
         </div>
 
