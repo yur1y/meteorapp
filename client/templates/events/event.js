@@ -206,21 +206,15 @@ Template.event.events({
             owner: temp.owner.get(),
             user: Meteor.userId(),
             event: temp.eventId.get(),
-            orderedCount: 0
+            orderedCount: 0,
+            email: temp.email.get()
         };
 
         for (let i = 0; i < temp.itemIds.get().length; i++) {
             d.amounts.push(userAmount(temp.itemIds.get()[i], Meteor.userId()));
             d.orderedCount += userAmount(temp.itemIds.get()[i], Meteor.userId());
         }
-        // d.total = ;
-        // total.;
-        // total.;
-        // total. = total.cash + total.del;
-        // d.owner =
 
-
-        // d.event = ;
 
         Meteor.call('users.checkout', d);
     }

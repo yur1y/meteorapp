@@ -33,10 +33,17 @@ if (Meteor.isServer) {
     });
 
     Accounts.onLogin(function () {
-        Meteor.user().services.google.id == 112536427740177169442 ?
-            Meteor.call('users.addRole', this.userId, 'admin') : null;
-        Meteor.call('ok', 'wow you are signed-in');
-    });
+            if (Meteor.users.find({
+                    _id: Meteor.userId(),
+                    'wallet.cash': {$exists: false},
+                    'services.google.id': 112536427740177169442
+                })) {
+                Meteor.call('users.addRole', this.userId, 'admin');
+                Meteor.users.update({_id: Meteor.userId()}, {$set: {'wallet.cash': 100, 'wallet.coupons': 100}});
+                Meteor.call('ok', 'wow you are signed-in');
+            }
+        }
+    );
 }
 Meteor.methods({
     'users.Addgroup': (userId, groupId) =>
@@ -52,23 +59,24 @@ Meteor.methods({
     'users.onRegister': (to) => {
         Meteor.call('users.send', to, 'invitation.html');
     },
-    'users.send': (to, tempName, data) => {
+    'users.send'  (to, tempName, data)  {
 
-        SSR.compileTemplate('htmlEmail', Assets.getText(tempName));
+        //noinspection JSUnresolvedFunction
+        SSR.compileTemplate('htmlEmail', Assets.getText(tempName), data);
 
-
+        let item = [];
+        for (let i = 0; i < data.items.length; i++) {
+            item.push(Items.findOne(data.items[i]));
+        }
         //  email sending method
         if (data) {
-            let d={items:Items.find({_id: data.items}),
-                owner:Meteor.users.findOne({_id: data.owner}),
-                user:Meteor.users.findOne({_id: data.user}),
+            let d = {
+                items: item,
+                owner: Meteor.users.findOne({_id: data.owner}),
+                user: Meteor.users.findOne({_id: data.user}),    //✓
                 event: Events.findOne({_id: data.event}),
-                orderedCount:data.orderedCount
+                orderedCount: data.orderedCount
             };
-            // data.items = .fetch();
-            // data.owner = ;
-            // data.user = ;
-            // data.event =;
 
 
             Email.send({
@@ -111,9 +119,7 @@ Meteor.methods({
         })
     },
     'users.checkout': (data) => {
-        // data.user =  data.user});
-        // data.owner  data.owner});
-        // data.event =data.event});
+
         let owner = Meteor.users.findOne({_id: data.owner});
         if (owner.services.google) {
 
@@ -123,24 +129,15 @@ Meteor.methods({
             Meteor.call('users.send', owner.services.vk.email, "toOwner.html", data);
         }
 
+        if (data.email) {
+            let user = Meteor.users.findOne({_id: data.user});
+            if (user.services.google) {
 
-        // if (data.user) {
-        //     if (user.services.google) {
-        //         Meteor.call('users.send', user.services.google.email,'cheque',data),
-        // Meteor.call('users.send', user.services.google.email, 'cheque', data);
-        // }
-        // if (user.services.vk) {
-        //     Meteor.call('users.send', user.services.vk.email, 'cheque', data);
-        // }
-        // }
-
-        // data.items;
-        // data.amounts;
-        // data.total;
-        // data.owner;
-        // data.user;
-        // data.event;
-
-
+                Meteor.call('users.send', user.services.google.email, "cheque.html", data);
+            }
+            else {
+                Meteor.call('users.send', user.services.vk.email, "cheque.html", data);
+            }
+        }
     }
 });
