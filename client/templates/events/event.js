@@ -12,7 +12,7 @@ Template.event.onCreated(function () {
     this.groupsIn = new ReactiveVar();
     this.eventId = new ReactiveVar();
     this.delivery = new ReactiveVar();
-    this.email = new ReactiveVar();
+    this.email = new ReactiveVar(false);
     this.itemIds = new ReactiveVar();
     this.owner = new ReactiveVar();
     setInterval(() => {
@@ -198,16 +198,16 @@ Template.event.events({
             items: temp.itemIds.get(),
             amounts: [],
             total: {
-                coupons: (totalCost(Meteor.userId())).coupons,
-                cash: (totalCost(Meteor.userId())).cash,
+                coupons: totalCost(Meteor.userId()).coupons,
+                cash: totalCost(Meteor.userId()).cash,
                 del: Number(temp.delivery.get()),
-                sum: (totalCost(Meteor.userId())).cash + Number(temp.delivery.get())
+                sum: totalCost(Meteor.userId()).cash + Number(temp.delivery.get())
             },
             owner: temp.owner.get(),
             user: Meteor.userId(),
             event: temp.eventId.get(),
             orderedCount: 0,
-            email: temp.email.get()
+            email: temp.email.get(),
         };
 
         for (let i = 0; i < temp.itemIds.get().length; i++) {
@@ -216,6 +216,10 @@ Template.event.events({
         }
 
 
-        Meteor.call('users.checkout', d);
+        Meteor.call('users.checkout', d,function (err, res) {
+            if(res){
+                console.log('wow')
+            }
+        });
     }
 });

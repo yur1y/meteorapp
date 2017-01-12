@@ -30,7 +30,6 @@ underscore
 http
 spacebars
 service-configuration
-meteorhacks:ssr
 email
 mrt:accounts-vk
 zhenya:moment-precise-range
@@ -44,3 +43,4 @@ sarasate:semantic-ui-datetimepicker
 spacebars-compiler
 random
 blaze
+meteorhacks:ssr

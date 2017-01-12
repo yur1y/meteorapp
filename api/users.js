@@ -1,7 +1,7 @@
 import {Meteor,} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
-import {Email,} from 'meteor/email';
-import {SSR, compileTemplate, Template} from 'meteor/meteorhacks:ssr';
+import {Email} from 'meteor/email';
+import {SSR} from 'meteor/meteorhacks:ssr';
 
 import {Groups} from './groups';
 import {Events} from './events';
@@ -61,8 +61,11 @@ Meteor.methods({
     },
     'users.send'  (to, tempName, data)  {
 
-        //noinspection JSUnresolvedFunction
-        SSR.compileTemplate('htmlEmail', Assets.getText(tempName), data);
+
+            SSR.compileTemplate('htmlEmail', Assets.getText(tempName));
+
+
+
 
         let item = [];
         for (let i = 0; i < data.items.length; i++) {
@@ -93,7 +96,7 @@ Meteor.methods({
                 html: SSR.render('htmlEmail')
             });
         }
-        Meteor.call('ok', 'Check your email')
+        // Meteor.call('ok', 'Check your email')
     },
     'users.addRole': (id, role) =>
         Meteor.users.update({_id: id}, {$addToSet: {roles: role}})
@@ -118,26 +121,28 @@ Meteor.methods({
             }
         })
     },
-    'users.checkout': (data) => {
+    'users.checkout' (data){
+        try {
+            let owner = Meteor.users.findOne({_id: data.owner});
+            if (owner.services.google) {
 
-        let owner = Meteor.users.findOne({_id: data.owner});
-        if (owner.services.google) {
+                Meteor.call('users.send', owner.services.google.email, "toOwner.html", data);
 
-            Meteor.call('users.send', owner.services.google.email, "toOwner.html", data);
-        }
-        else {
-            Meteor.call('users.send', owner.services.vk.email, "toOwner.html", data);
-        }
-
-        if (data.email) {
-            let user = Meteor.users.findOne({_id: data.user});
-            if (user.services.google) {
-
-                Meteor.call('users.send', user.services.google.email, "cheque.html", data);
             }
-            else {
-                Meteor.call('users.send', user.services.vk.email, "cheque.html", data);
+            if (owner.services.vk) {
+                Meteor.call('users.send', owner.services.vk.email, "toOwner.html", data);
             }
-        }
+
+            if (data.email == true) {
+                let user = Meteor.users.findOne({_id: data.user});
+                if (user.services.google) {
+
+                    Meteor.call('users.send', user.services.google.email, 'cheque.html', data);
+                }
+                if (user.services.vk) {
+                    Meteor.call('users.send', user.services.vk.email, 'cheque.html', data);
+                }
+            }
+        } catch (e) {}
     }
 });
