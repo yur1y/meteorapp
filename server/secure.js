@@ -18,8 +18,8 @@ export let secure = () => {
         'webassets.mongodb.com',
         'cdn-images-1.medium.com',
         'https://mquandalle.gitbooks.io/apprendre-meteor/content/img/atmosphere.png',
-        Meteor.absoluteUrl()+'/favicon-32x32.png',
-        Meteor.absoluteUrl()+'/no-image.jpg'
+        Meteor.absoluteUrl()+'favicon-32x32.png',
+        Meteor.absoluteUrl()+'no-image.jpg'
     ];
 
     trusted.forEach((x) =>BrowserPolicy.content.allowOriginForAll(x))
