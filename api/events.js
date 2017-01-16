@@ -81,15 +81,26 @@ Meteor.methods({
         for (let i = 0; i < userId.length; i++) {
             Events.update({$or: [{_id: id}, {groups: id}]}, {$pull: {confirm: {user: userId[i]}}})
         }
-    }, 'events.order': (id, userId) => {
+    }, 'events.order': (id, userId, delivery) => {
 
-        Events.update({_id: id}, {$addToSet: {ordered: userId}});
+        Events.update({_id: id}, {$addToSet: {'ordered.user': userId, 'ordered.delivery': delivery}});
         let event = Events.findOne({_id: id});
         if (event.ordered.length == event.confirm.length) {
-            //send 'thank-you' for take-part in event email
-        }
-        else {
-            console.log(event.ordered.length + '  ' + event.confirm.length);
+            //send 'thank-you' for take-part in event email //all user order something... so... payback them delivery !
+            Events.update({_id:id},{$set:{status:'delivered'}});
+            let data = {
+                payback: [],
+                user: [],
+                owner: event.owner,
+                name: event.name,
+                url: event.url
+            };
+            for (let i = 0; i < event.ordered.user.length; i++) {
+                Meteor.users.update({_id: event.ordered.user[i]}, {$inc: {'wallet.$.cash': event.ordered.delivery[i]}});
+                data.user[i] = event.ordered.user[i];
+                data.payback[i] = event.ordered.delivery[i];
+            }
+            Meteor.call('users.checkout', data);
         }
     }
 });

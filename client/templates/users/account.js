@@ -14,8 +14,9 @@ Template.account.helpers({
     isOwner(){
         return this.owner == Meteor.userId()
     },
-    userinfo: Meteor.users.find({_id: Meteor.userId()})
-    ,
+    userInfo(){
+        return Meteor.users.find({_id: Meteor.userId()})
+    },
     isAdmin(){
         if (Meteor.userId()) {
             let user = Meteor.users.findOne(Meteor.userId, {fields: {roles: 1}});
@@ -24,7 +25,7 @@ Template.account.helpers({
     },
     allUsers(){
         return Template.instance().editUser.get() != null ? Meteor.users.find
-        ({_id: Template.instance().editUser.get()}) : Meteor.users.find({});
+            ({_id: Template.instance().editUser.get()}) : Meteor.users.find({});
     },
     showUser(){
         return Template.instance().editUser.get() == this._id;
@@ -33,13 +34,16 @@ Template.account.helpers({
 
     inCart: Items.find({'cart.user': Meteor.userId()}),
     groups(){
-        return Groups.find({users: Meteor.userId()})
+        return Groups.find({$or: [{users: Meteor.userId()}, {owner: Meteor.userId()}]})
     },
     toConfirm(){
-        return Events.find({'confirm.user': Meteor.userId(), 'confirm.answer': false})
+        return Events.find({$and: [{'confirm.user': Meteor.userId()}, {'confirm.answer': false}]})
     },
     confirmed(){
-        return Events.find({'confirm.user': Meteor.userId(), 'confirm.answer': true})
+        return Events.find({$and: [{'confirm.user': Meteor.userId()}, {'confirm.answer': true}]})
+    },
+    ordered(){
+        return Items.find({'cart.ordered': true, 'cart.user': Meteor.userId()})
     }
 });
 Template.account.events({

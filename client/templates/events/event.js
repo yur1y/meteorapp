@@ -191,12 +191,12 @@ Template.event.events({
     },
     'click .order'(e, temp){
         e.preventDefault();
-        // Meteor.call('items.order', temp.itemIds.get(), Meteor.userId(), temp.owner.get());
-
+        Meteor.call('items.order', temp.itemIds.get(), Meteor.userId(), temp.owner.get());
+        Meteor.call('events.order', temp.eventId.get(), Meteor.userId(), Number(temp.delivery.get()));
 
         let d = { // - data
             items: temp.itemIds.get(),
-            amounts: [],
+            amount: [],
             total: {
                 coupons: totalCost(Meteor.userId()).coupons,
                 cash: totalCost(Meteor.userId()).cash,
@@ -208,18 +208,24 @@ Template.event.events({
             event: temp.eventId.get(),
             orderedCount: 0,
             email: temp.email.get(),
+            cost: []
         };
 
         for (let i = 0; i < temp.itemIds.get().length; i++) {
-            d.amounts.push(userAmount(temp.itemIds.get()[i], Meteor.userId()));
+            d.amount.push(userAmount(temp.itemIds.get()[i], Meteor.userId()));
             d.orderedCount += userAmount(temp.itemIds.get()[i], Meteor.userId());
+            if (totalCost(Meteor.userId(), temp.itemIds.get()[i]).cash > 0) {
+                d.cost.push(totalCost(Meteor.userId(), temp.itemIds.get()[i]).cash + '$')
+            } else {
+                d.cost.push(totalCost(Meteor.userId(), temp.itemIds.get()[i]).coupons + ' coupons')
+            }
         }
 
+        Meteor.call('users.checkout', d);
 
-        Meteor.call('users.checkout', d,function (err, res) {
-            if(res){
-                console.log('wow')
-            }
-        });
+        let dialog = document.querySelector('#order-dialog');
+        dialog.close();
+        temp.delivery.set(null);
+
     }
 });

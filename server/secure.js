@@ -13,7 +13,11 @@ export let secure = () => {
         'pp.vk.me',
         '*.googleusercontent.com',
         'fonts.googleapis.com',
-        'fonts.gstatic.com'
+        'fonts.gstatic.com',
+        'getmdl.io',
+        'webassets.mongodb.com',
+        'cdn-images-1.medium.com',
+        'https://mquandalle.gitbooks.io/apprendre-meteor/content/img/atmosphere.png'
     ];
 
     trusted.forEach((x) =>BrowserPolicy.content.allowOriginForAll(x))

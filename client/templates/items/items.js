@@ -45,11 +45,7 @@ Template.itemsData.events({
           err? sAlert.error(err.err,err.details): null
             });
 
-        // setTimeout(function () {
-        //     e.target.name.value = '';
-        //     e.target.cash.value = '';
-        //     e.target.amount.value = '';
-        // }, 1000)
+
     }
 
 });

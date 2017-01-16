@@ -120,16 +120,8 @@
                             <p style="font-family:Helvetica, Arial, sans-serif;font-size:16px;line-height:16px;font-weight:bold;color:#444444;margin-top:0px;margin-bottom:0px;">
                                 Hello {{owner.profile.name}} ! from meteor-app</p>
                             <p style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:14px;font-weight:500;color:#888888;margin-top:8px;margin-bottom:0px;">
-                                User
-                                {{#if user.services.google}}
-                                    <img src="{{user.services.google.picture}}" width="75">
-
-                                {{else}}
-                                    <img src="{{user.services.vk.photo_big}}" width="75">
-
-                                {{/if}} <strong>{{user.profile.name}}</strong> ordered {{orderedCount}} items , payed
-                                for them {{total.coupons}} coupons, {{total.sum}}$ included: {{total.del}}(delivery)
-                                + {{total.cash}}$ (for items) !</p>
+                               All users have ordered something so they get delivery payback of {{sum}}$
+                            </p>
                         </div>
                     </td>
                 </tr>
@@ -138,15 +130,7 @@
                         style="padding-left:40px;padding-right:40px;padding-top:40px;padding-bottom:40px;background-color:#ffffff">
                         <div class="body-text"
                              style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;">
-                            <p>Event name : <a href="{{event.url}}">{{event.name}}</a></p>
-                            {{#each item}}
-                                <div style="display: inline">
-                                    <img height="100" width="100" src="{{url}}" alt="{{url}}">
-                                    <p>name: {{itemName}}</p>
-                                    <p>price: {{cash}}$ or  {{coupons}} coupons</p>
-                                    <p>bought: {{userAmount }} for {{cost}}</p>
-                                </div>
-                            {{/each}}
+                            <p>Message sent  from <a href="{{event.url}}">{{event.name}}  event</a></p>
 
 
                         </div>

@@ -1,5 +1,6 @@
 import {Template} from 'meteor/templating';
 
+
 Template.layout.onRendered(function () {
 
     $(".mdl-layout__drawer-button").click(function () {
@@ -17,7 +18,15 @@ Template.layout.onRendered(function () {
         $('.login-close-text').trigger('click');
     });
 
-    // $('.mdl-layout--large-screen-only').click(function () {
-    //     $('.mdl-layout--large-screen-only').trigger('click');
-    // })
-   });
+});
+
+Template.home.onRendered(function () {
+    $('.main').addClass('mdl-layout__content');
+    $('.mdl-layout__content').css('width', '100%');
+});
+
+Template.home.onDestroyed(function () {
+    $('.main').removeClass('mdl-layout__content');
+    $('.main').css('width', '');
+
+});

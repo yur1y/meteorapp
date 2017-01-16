@@ -32,7 +32,7 @@
             </div>
 
         </div>
-        {{#each userinfo}}
+        {{#each userInfo}}
             <div class="mdl-tabs__panel " id="account-panel">
                 <div class=" mdl-cell--6-col ">
                     {{>profile}}
@@ -43,7 +43,7 @@
         {{/each }}
         <div class="mdl-tabs__panel" id="cart-panel">
             <div class="mdl-grid">
-                <div class="  mdl-cell--6-col">
+                <div class="  mdl-cell--4-col">
                     <h5>Wish List</h5>
                     {{#each wished}}
                         <div class="stitched">
@@ -56,16 +56,14 @@
                             {{/if}}</p>
                             <div class="inline">
                                 {{>itemCart}}
-                                    <!--{{#if isOwner}}-->
-                                <!--{{>itemEdit}}-->
-                                    <!--{{/if}}-->
+
                             </div>
                         </div>
                     {{else}}
                         <h6>empty,but you can add?)</h6>
                     {{/each}}
                 </div>
-                <div class=" mdl-cell--6-col">
+                <div class=" mdl-cell--4-col">
                     <h5>Cart</h5>
                     {{#each inCart}}
 
@@ -87,15 +85,26 @@
                                 <div class="mdl-tooltip mdl-tooltip--top " data-mdl-for="remove-cart{{_id}}">
                                     remove from cart
                                 </div>
-                                    <!--{{#if isOwner}}-->
-                                <!--{{>itemEdit}}-->
-                                    <!--{{/if}}-->
+
                             </div>
                         </div>
                     {{else}}
                         <h6>empty,but you can add?)</h6>
                     {{/each}}
+                </div>
+                 <div class=" mdl-cell--4-col">
+                    <h5>Ordered items</h5>
 
+                    {{#each ordered}}
+                        <img height="100" width="100" src="{{url}}">
+                        <p>name: {{itemName}}</p>
+                        <p> price: {{cash}} $ </p>
+                        <p> {{#if coupons}}
+                            Coupons price:{{coupons}}
+                        {{/if}}</p>
+
+
+                        {{/each}}
                 </div>
             </div>
         </div>
@@ -103,7 +112,7 @@
         <div class="mdl-tabs__panel" id="dashboard-panel">
             {{#if isAdmin}}    <h3>Users panel</h3>{{/if}}
             <div class="mdl-grid">
-                {{#each userinfo}}
+                {{#each userInfo}}
                     {{#if isAdmin}}
                         {{#each allUsers}}
                             <div class="fixed mdl-cell mdl-cell--4-col">

@@ -1,14 +1,14 @@
-<template name="layout"  >
+<template name="layout">
+    {{>sAlert}}
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
-             mdl-layout--no-desktop-drawer-button">
-         {{>header}}
+             mdl-layout--no-desktop-drawer-button fixed">
+        {{>header}}
 
-        <div class="main" >
+        <div class="main mdl-layout__content">
+            {{>yield 'aside'}}
+            {{>yield}}
 
-                {{>yield 'aside'}}
-                {{>yield}}
-                    {{>sAlert}}
-                {{>yield 'below'}}
+            {{>yield 'below'}}
         </div>
 
     </div>
