@@ -10,37 +10,32 @@ import {Items} from './items';
 if (Meteor.isServer) {
     // 112536427740177169442 yuriy iskiv
     Accounts.onCreateUser(function (options, user) {
-        options.profile ?
-            user.profile = options.profile : null;
+        if (options.profile) {
+            user.profile = options.profile
+        }
 
-        user.services.google ?
-            Meteor.call('users.onRegister', user.services.google.email) :
-            user.services.vk ?
-                Meteor.call('users.onRegister', user.services.vk.email)
-                : null;
+        if (user.services.google) {
+            // Meteor.call('users.onRegister', user.services.google.email);
+        }
+        if (user.services.vk) {
+            // Meteor.call('users.onRegister', user.services.vk.email);
+        }
         user.groups = [];
 
         user.roles = [];
         user.wallet = {
             cash: 500, coupons: 50
         };
-        user.services.google.id == 112536427740177169442 ?
-            Meteor.call('users.addRole', user._id, 'admin') : null;
+        if (user.services.google.id === 112536427740177169442) {
+            Meteor.call('users.addRole', user._id, 'admin')
+        }
 
         Meteor.call('ok', 'Welcome');
         return user;
     });
 
     Accounts.onLogin(function () {
-            if (Meteor.users.find({
-                    _id: Meteor.userId(),
-                    'wallet.cash': {$exists: false},
-                    'services.google.id': 112536427740177169442
-                })) {
-                Meteor.call('users.addRole', this.userId, 'admin');
-                Meteor.users.update({_id: Meteor.userId()}, {$set: {'wallet.cash': 100, 'wallet.coupons': 100}});
-                Meteor.call('ok', 'wow you are signed-in');
-            }
+            Meteor.call('ok', 'wow you are signed-in');
         }
     );
 }
@@ -93,7 +88,7 @@ Meteor.methods({
 
 
             data.user = Meteor.users.findOne({_id: data.currentUser});
-            data.payback=data.currentPayback;
+            data.payback = data.currentPayback;
             Email.send({
                 to: to,
                 from: 'admin@meteorapp.com',
@@ -169,7 +164,7 @@ Meteor.methods({
                 if (user.length > 1) {
                     for (let i = 0; i < user.length; i++) {
                         data.currentUser = user[i]._id;
-                        data.currentPayback=data.payback[i];
+                        data.currentPayback = data.payback[i];
                         if (user[i].services.google) {
 
                             Meteor.call('users.send', user[i].services.google.email, 'thank_you.html', data);
