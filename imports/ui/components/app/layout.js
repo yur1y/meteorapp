@@ -22,10 +22,10 @@ Template.layout.onRendered(function () {
 });
 
 Template.home.onRendered(function () {
-    $('.mdl-layout__content').css('width', '100%');
+    $('.main').css('width', '100%');
 });
 
 Template.home.onDestroyed(function () {
-    $('.mdl-layout__content').css('width', '');
+    $('.main').css('width', '');
 
 });
