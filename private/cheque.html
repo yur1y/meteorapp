@@ -117,35 +117,46 @@
                         style="padding-top:40px;padding-bottom:40px;padding-left:40px;padding-right:40px;border-bottom: 1px solid #eee;">
 
                         <div class="header-text" style="float:left;">
-                            <p style="font-family:Helvetica, Arial, sans-serif;font-size:16px;line-height:16px;font-weight:bold;color:#444444;margin-top:0px;margin-bottom:0px;">
-                                Hello {{user.profile.name}} ! from meteor-app</p>
-                            <p style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:14px;font-weight:500;color:#888888;margin-top:8px;margin-bottom:0px;">
+                            <h4 style="font-family:Helvetica, Arial, sans-serif;font-size:16px;line-height:16px;font-weight:bold;color:#444444;margin-top:0px;margin-bottom:0px;">
+                                Hello {{user.profile.name}} ! from meteor-app and <p>Event name : <a
+                                    href="{{event.url}}">{{event.name}}</a></p> owner
+                                <strong>{{owner.profile.name}}</strong>
+                                {{#if owner.services.google}}
+                                    <img src="{{owner.services.google.picture}}" width="50">
+                                {{else}}
+                                    <img src="{{owner.services.vk.photo_big}}" width="50">
+                                {{/if}} !
+                            </h4>
+                            <h5 style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:14px;font-weight:500;color:#888888;margin-top:8px;margin-bottom:0px;">
                                 Thank you for ordering {{orderedCount}} items ,
                                 for them {{total.coupons}} coupons,
-                                {{total.sum}}$ included: {{total.del}}(delivery)
-                                + {{total.cash}}$ (for items) !</p>
+                                {{sum}}$ included: {{delivery}}(delivery)
+                                + {{total.cash}}$ (for items) !</h5>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td class="container-padding content" align="left"
                         style="padding-left:40px;padding-right:40px;padding-top:40px;padding-bottom:40px;background-color:#ffffff">
+                        <p>Event name : <a href="{{event.url}}">{{event.name}}</a></p>
+
                         <div class="body-text"
                              style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;">
-                            <p>Event name : <a href="{{event.url}}">{{event.name}}</a></p>
-                            {{#each item}}
+                        {{#each item}}
+
                                 <div style="display: inline">
                                     <img height="100" width="100" src="{{url}}" alt="{{url}}">
                                     <p>name: {{itemName}}</p>
                                     <p>price: {{cash}}$ or  {{coupons}} coupons</p>
-                                    <p>bought: {{userAmount }} for {{cost}}</p>
+                                    <p>  {{cost}}</p>
                                 </div>
-                            {{/each}}
+                        {{/each}}
                         </div>
                         <div class="call-to-action"
                              style="margin-top:40px;border-top:1px solid #eeeeee;padding-top:40px;">
                         </div>
-                        <p>P.S. If ALL event users order something they'l get delivery payback!</p>
+                        <p>P.S. If ALL event users order something they'l get delivery payback! <br>
+                            So... contact your buddies </p>
                     </td>
                 </tr>
             </table>

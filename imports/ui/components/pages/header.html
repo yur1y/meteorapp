@@ -1,0 +1,44 @@
+<template name="header">
+
+<header class="mdl-layout__header">
+<div class="mdl-layout__header-row">
+
+    <a class="mdl-layout-title" href="{{pathFor route="home"}}">
+        <div><i class="material-icons home">local_pizza</i> Home</div>
+    </a>
+
+        <div class="mdl-layout-spacer"></div>
+
+        <nav class="mdl-navigation login  mdl-layout--large-screen-only ">
+            {{#if currentUser}}
+            <a class=" mdl-navigation__link " href="{{pathFor route="events"}}">
+                <i class="  material-icons">event</i>Events </a>
+            <a class="mdl-navigation__link " href="{{pathFor route="groups"}}">
+                <i class="links  material-icons">store</i>Groups</a>
+            <a class="mdl-navigation__link " href="{{pathFor route="account"}}">
+                <i class="material-icons ">account_circle</i>My Account</a>
+            <a class="mdl-navigation__link " href="{{pathFor route="about"}}">
+                <i class="  material-icons">android</i>About</a>
+            {{/if}}
+            {{>  loginButtons align='right' }}
+        </nav>
+    </div>
+    </header>
+        <div class="mdl-layout__drawer">
+            <nav class="mdl-navigation  ">
+                <a class="mdl-navigation__link links" href="{{pathFor route="home"}}">
+                    <i class=" home material-icons">local_pizza</i> Home</a>
+                {{#if currentUser}}
+                    <a class="links mdl-navigation__link " href="{{pathFor route="events"}}">
+                        <i class="  material-icons">event</i>Events </a>
+                    <a class="links mdl-navigation__link " href="{{pathFor route="groups"}}">
+                        <i class="  material-icons">store</i>Groups</a>
+                    <a class="links mdl-navigation__link " href="{{pathFor route="account"}}">
+                        <i class="  material-icons">account_circle</i>My Account</a>
+                    <a class="links mdl-navigation__link " href="{{pathFor route="about"}}">
+                        <i class="  material-icons">android</i>About</a>
+                {{/if}}
+                <div class="loginbuttons">{{>  loginButtons }}</div>
+            </nav>
+        </div>
+    </template>

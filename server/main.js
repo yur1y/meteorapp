@@ -1,14 +1,7 @@
-import {Meteor} from 'meteor/meteor';
-import {sAlert} from 'meteor/juliancwirko:s-alert';
-
-import {secure} from './secure';
-import {configure} from './configure'
-
-Meteor.startup(function () {
-    return Meteor.isServer ?
-        [
-            configure(),
-            secure(),
-        ]
-        : null
-});
+import '../imports/startup/server';
+import '../imports/startup/both';
+import '../imports/api/server/publications'
+import '../imports/api/methods/events';
+import '../imports/api/methods/groups';
+import '../imports/api/methods/items';
+import '../imports/api/methods/users';

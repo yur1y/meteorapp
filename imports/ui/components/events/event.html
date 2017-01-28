@@ -1,0 +1,105 @@
+<template name="event">
+    <div class="mdl-grid ">
+        <div class=" mdl-cell mdl-cell--8-col main">
+            {{#each event}}
+                {{#if isOwner}}
+                    <a href="{{pathFor 'eventEdit'}}" class="edit">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                            <i class="material-icons">edit</i>event
+                        </button>
+                    </a>
+
+                {{/if}}
+                {{>eventHead}}
+                <br>
+                <table class="mdl-data-table mdl-shadow--2dp">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Time to event</th>
+                        <th>Created at</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{timeleft}}</td>
+                        <td>{{createdAt}}</td>
+                        <td>{{status}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            {{/each}}
+        </div>
+
+        <div class=" mdl-cell mdl-cell--8-col main">
+            <h5>Groups in event:</h5>
+            {{#each groups}}
+                {{#if isInEvent}}
+
+                    {{>groupTitle}}
+                {{/if}}
+            {{/each}}
+        </div>
+        <div class=" mdl-cell mdl-cell--8-col main">
+            {{#if isConfirmed}}
+                <h5>Items to order:</h5>
+                {{#each itemsToOrder}}
+                    <div class="mdl-cell mdl-cell--3-col-tablet inline ">
+                        <div class="stitched"><img height="100" width="100" src="{{url}}">
+                            <p>name: {{itemName}}</p>
+                            <p>ordered: {{itemAmount}}</p>
+                            <p class="inline radio">Pay by:
+                                <label class=" mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-0-{{_id}}">
+                                    <input type="radio" disabled={{canPay.a}} id="option-0-{{_id}}"
+                                           class="mdl-radio__button"
+                                           name="options-{{_id}}" value={{cash}} checked={{check.a}}>
+
+                                    <span class="mdl-radio__label"><i class="material-icons">attach_money</i></span>
+                                </label>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1-{{_id}}">
+                                    <input type="radio" disabled={{canPay.b}} id="option-1-{{_id}}"
+                                           class="mdl-radio__button"
+                                           name="options-{{_id}}" value={{coupons}} checked={{check.b}}>
+
+                                    <span class="mdl-radio__label">
+                                        <i class="material-icons">payment</i></span>
+                                </label>
+                                <label hidden class="mdl-radio mdl-js-radio " for="option-2-{{_id}}">
+                                    <input type="radio" id="option-2-{{_id}}"
+                                           class="mdl-radio__button"
+                                           name="options-{{_id}}">
+                                </label>
+                            </p>
+                            <p class="toPay{{_id}}">{{toPay}}</p>
+                        </div>
+                    </div>
+                {{else}}
+                    <p>No items</p>
+                {{/each}}
+            {{else}}
+                <p>tip:Confirm to proceed ordering goods<br>
+                    or unconfirm to quit event</p>
+            {{/if}}
+        </div>
+        <div class=" mdl-cell mdl-cell--8-col main">
+            <p>Cash to pay: {{total.cash}} <i class="material-icons">attach_money</i> Coupons to pay: {{total.coupons}}
+                <i class="material-icons">payment</i>
+                {{#if isConfirmed}}
+
+                    {{#if canPay.c}}<!--// return 'disabled string'-->
+
+                    {{else}}
+
+
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  mdl-color--accent order-dialog">
+                            <i class="material-icons">done_all</i>Order
+                        </button>
+                    {{/if}}
+                {{/if}}
+            </p>
+        </div>
+        {{>order}}
+    </div>
+</template>

@@ -1,0 +1,42 @@
+
+<template name="order">
+    <dialog class="mdl-dialog" id="order-dialog">
+
+        <h4 class="mdl-dialog__title">Orderin ...</h4>
+        <p> everything is very serious.. so.. if you here.. choose delivery type</p>
+        <div class="mdl-dialog__content">
+            <div class="newselect ordering-select">
+                <div class="mdl-selectfield ordering">
+                    <select class="delivery" name="delivery">
+                        <option selected disabled></option>
+                        <option value="0">None, 0$</option>
+                        <option value="5">Our delivery guy,5$</option>
+                        <option value="50">Spider-man,50$</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mdl-dialog__actions--full-width mdl-dialog__actions">
+                {{#if canOrder}}
+                    <p>Cost: {{total.cash}}$ + {{total.coupons}} coupons </p>
+                    <p>delivery: {{delivery}} $ </p>
+                    <p>Total cash:{{totalCashwithDel }} $</p>
+                    <button class="mdl-button  mdl-js-button mdl-js-ripple-effect  mdl-color--accent  order"
+                            type="submit">
+                        <i class="material-icons">done</i>Order
+                    </button>
+                {{/if}}
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="check-email">
+                    <input type="checkbox" id="check-email" class="mdl-checkbox__input" name="email"/>
+                    <span class="mdl-checkbox__label"><i
+                            class="material-icons">email</i> Get cheque email?</span>
+                </label>
+
+                <button type="button"
+                        class="mdl-button mdl-js-button mdl-js-ripple-effect  cancel">
+                    <i class="material-icons">cancel</i> Cancel
+                </button>
+            </div>
+        </div>
+
+    </dialog>
+</template>

@@ -118,9 +118,17 @@
 
                         <div class="header-text" style="float:left;">
                             <p style="font-family:Helvetica, Arial, sans-serif;font-size:16px;line-height:16px;font-weight:bold;color:#444444;margin-top:0px;margin-bottom:0px;">
-                                Hello {{user.profile.name}} ! from meteor-app</p>
+                                Hello {{user.profile.name}} ! from meteor-app and <a href="{{url}}">{{name}} owner :
+                                <strong>{{owner.profile.name}}</strong>
+                                {{#if owner.services.google}}
+                                    <img src="{{owner.services.google.picture}}" width="50">
+                                {{else}}
+                                    <img src="{{owner.services.vk.photo_big}}" width="50">
+                                {{/if}}</a>
+                            </p>
                             <p style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:14px;font-weight:500;color:#888888;margin-top:8px;margin-bottom:0px;">
-                                All users (and you) have ordered something so get delivery payback of {{payback}}$
+                                All users have ordered something so get your delivery payback of {{payback}}$ , check
+                                your account page
                             </p>
                         </div>
                     </td>
@@ -130,12 +138,20 @@
                         style="padding-left:40px;padding-right:40px;padding-top:40px;padding-bottom:40px;background-color:#ffffff">
                         <div class="body-text"
                              style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;">
-                            <p>Message sent from <a href="{{event.url}}">{{event.name}}  event</a></p>
+                            <p>Message sent from
+                            <h5>Event name : <a
+                                    href="{{url}}">{{name}}</a> owner
+                                <strong>{{owner.profile.name}}</strong>
+                                {{#if owner.services.google}}
+                                    <img src="{{owner.services.google.picture}}" width="50">
+                                {{else}}
+                                    <img src="{{owner.services.vk.photo_big}}" width="50">
+                                {{/if}}</h5>
                         </div>
 
                         <div class="call-to-action"
                              style="margin-top:40px;border-top:1px solid #eeeeee;padding-top:40px;">
-
+                            All users
                         </div>
                     </td>
                 </tr>
