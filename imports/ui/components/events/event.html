@@ -53,14 +53,14 @@
                             <p class="inline radio">Pay by:
                                 <label class=" mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-0-{{_id}}">
                                     <input type="radio" disabled={{canPay.a}} id="option-0-{{_id}}"
-                                           class="mdl-radio__button"
+                                           class="mdl-radio__button {{#if check.a}} check {{/if}}"
                                            name="options-{{_id}}" value={{cash}} checked={{check.a}}>
 
                                     <span class="mdl-radio__label"><i class="material-icons">attach_money</i></span>
                                 </label>
                                 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1-{{_id}}">
                                     <input type="radio" disabled={{canPay.b}} id="option-1-{{_id}}"
-                                           class="mdl-radio__button"
+                                           class="mdl-radio__button {{#if check.b}} check {{/if}}"
                                            name="options-{{_id}}" value={{coupons}} checked={{check.b}}>
 
                                     <span class="mdl-radio__label">

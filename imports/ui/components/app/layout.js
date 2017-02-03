@@ -21,8 +21,7 @@ Template.layout.onRendered(function () {
 
 });
 Template.home.onRendered(function () {
-
-    $('.mdl-layout__content').css('width','100%');
+    $('.mdl-layout__content').css('width', '100%');
 });
 
 Template.home.onDestroyed(function () {

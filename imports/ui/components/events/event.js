@@ -21,10 +21,6 @@ Template.event.onCreated(function () {
 
 });
 
-Template.event.onRendered(function () {// якщо це забрати то щоб(зразу)  'зняти' вибране радіо треба буде спочатку вибрати інше
-    $('input:radio:checked').addClass('check');
-});
-
 Template.event.helpers({
     event: () => Events.find({}),
     isOwner(){
@@ -70,7 +66,6 @@ Template.event.helpers({
     },
     check(){
         let checked = {a: null, b: null};
-
         const array = this.cart.find(cart => cart.user === Meteor.userId());
 
         if (array.payBy === 'cash') checked.a = 'checked';
@@ -84,7 +79,6 @@ Template.event.helpers({
         const array = this.cart.find(cart => cart.user === Meteor.userId());
 
         if (array.payBy === 'cash') return 'cost: ' + totalCost(Meteor.userId(), this._id).cash + ' $';
-
         if (array.payBy === 'coup') return 'cost: ' + totalCost(Meteor.userId(), this._id).coupons + ' coupons';
     }
 });
@@ -92,13 +86,10 @@ Template.event.events({
     'change .radio'(e){
         e.preventDefault();
         let radio = $('input[name="' + 'options-' + this._id + '"]:checked');
-        $('input[name="' + 'options-' + this._id + '"]').removeClass('check');
 
         if (radio.val() == this.cash) Meteor.call('items.payBy', this._id, 'cash');
         if (radio.val() == this.coupons) Meteor.call('items.payBy', this._id, 'coup');
-
-        $('input[name' + '="' + 'options-' + this._id + '"]:checked').addClass('check');
-    },
+   },
     'click input:radio'(e){
 
         let radio = $('input[name="' + e.currentTarget.name + '"]:checked');
@@ -107,7 +98,6 @@ Template.event.events({
 
             radio.removeClass('check');
             $('#option-2-' + this._id).trigger('click');//hidden
-
         }
     },
     'click .order-dialog'(e){

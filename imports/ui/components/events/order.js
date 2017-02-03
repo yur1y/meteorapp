@@ -43,12 +43,14 @@ Template.order.events({
     },
     'click .order'(e, temp){
         e.preventDefault();
+        let event = Events.findOne({_id: parent(temp).eventId.get()});
 
         let data = {
             items: [],
             delivery: temp.delivery.get(),
             event: parent(temp).eventId.get(),
             email: $('#check-email').is(':checked'),
+            owner: Meteor.users.findOne({_id: event.owner})
         };
 
         Items.find({
@@ -56,10 +58,9 @@ Template.order.events({
                 {'cart.payBy': {$in: ['coup', 'cash']}}
             ]
         }).map(doc => data.items.push(doc._id));
-        Meteor.call('events.order', data.event, Number(data.delivery));
+        // Meteor.call('events.order', data.event, Number(data.delivery));
 
-        let owner = Events.findOne({_id: data.event});
-        Meteor.call('items.order', data.items, owner._id, data.delivery);
+        // Meteor.call('items.order', data.items, event.owner, data.delivery);
 
         Meteor.call('users.orderReport', data);
         document.querySelector('#order-dialog').close();
