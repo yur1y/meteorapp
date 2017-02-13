@@ -14,7 +14,7 @@ Items.allow({
         return ownsDocument(userId, file)
     },
     update: function (userId, file) {
-        return ownsDocument(userId, file)
+        return userId
     }
 });
 
@@ -43,7 +43,7 @@ if (Meteor.isServer) {
                 return ownsDocument(userId, file);
             },
             update: function (userId, file) {
-                return ownsDocument(userId, file);
+                return userId;
             }
         }),
         simulateWriteDelay: 0
