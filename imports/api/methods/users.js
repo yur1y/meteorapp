@@ -43,7 +43,7 @@ if (Meteor.isClient) {
 
 Meteor.methods({
     'users.email'(id)  {
-        if (this.userId) {
+
             let user = Meteor.users.findOne({_id: id});
             if (user.services.google) {
                 return user.services.google.email;
@@ -52,7 +52,7 @@ Meteor.methods({
             if (user.services.vk) {
                 return user.services.vk.email
             }
-        }
+
     },
     'users.Addgroup' (userId, groupId) {
         if (this.userId) {
@@ -126,48 +126,44 @@ Meteor.methods({
     },
     'users.orderReport'(data, user)
     {
-        try {
 
-            data.event = Events.findOne({_id: data.event});
 
-            data.item = [];
+        data.event = Events.findOne({_id: data.event});
 
-            data.orderedCount = 0;
-            data.total = totalCost(user);
-            for (let i = 0; i < data.items.length; i++) {
+        data.item = [];
 
-                data.item.push(Items.findOne(data.items[i]));
+        data.orderedCount = 0;
+        data.total = totalCost(user);
+        for (let i = 0; i < data.items.length; i++) {
 
-                data.item[i].amount = (userAmount(data.items[i], user));
+            data.item.push(Items.findOne(data.items[i]));
 
-                data.orderedCount += userAmount(data.items[i], user);
+            data.item[i].amount = (userAmount(data.items[i], user));
 
-                if (totalCost(user, data.items[i]).cash > 0) {
-                    data.item[i].cost = 'cost:' + data.item[i].cash + '$ *' + data.item[i].amount + '= ' + totalCost(user, data.items[i]).cash + ' $';
-                }
-                else {
-                    data.item[i].cost = 'cost:' + data.item[i].coupons + ' coup *' + data.item[i].amount + '= ' + totalCost(user, data.items[i]).coupons + ' coupons'
-                }
+            data.orderedCount += userAmount(data.items[i], user);
+
+            if (totalCost(user, data.items[i]).cash > 0) {
+                data.item[i].cost = 'cost:' + data.item[i].cash + '$ *' + data.item[i].amount + '= ' + totalCost(user, data.items[i]).cash + ' $';
             }
-
-            data.sum = Number(data.delivery) + totalCost(user).cash;
-
-            data.event.url = Meteor.absoluteUrl() + 'events/' + data.event.url;
-
-            data.user = Meteor.users.findOne({_id: user});
-
-            let ownerEmail = Meteor.call('users.email', data.event.owner);
-
-            Meteor.call('users.send', ownerEmail, "toOwner.html", data);
-
-            if (data.email == true) {
-
-                let userEmail = Meteor.call('users.email', user);
-                Meteor.call('users.send', userEmail, 'cheque.html', data);
+            else {
+                data.item[i].cost = 'cost:' + data.item[i].coupons + ' coup *' + data.item[i].amount + '= ' + totalCost(user, data.items[i]).coupons + ' coupons'
             }
         }
-        catch (err) {
-            console.log(err);
+
+        data.sum = Number(data.delivery) + totalCost(user).cash;
+
+        data.event.url = Meteor.absoluteUrl() + 'events/' + data.event.url;
+
+        data.user = Meteor.users.findOne({_id: user});
+
+        let ownerEmail = Meteor.call('users.email', data.event.owner);
+
+        Meteor.call('users.send', ownerEmail, "toOwner.html", data);
+
+        if (data.email == true) {
+
+            let userEmail = Meteor.call('users.email', user);
+            Meteor.call('users.send', userEmail, 'cheque.html', data);
         }
     }
 });
