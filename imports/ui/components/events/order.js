@@ -62,7 +62,7 @@ Template.order.events({
 
         // Meteor.call('items.order', data.items, event.owner, data.delivery);
 
-        Meteor.call('users.orderReport', data);
+        Meteor.call('users.orderReport', data, Meteor.userId());
         document.querySelector('#order-dialog').close();
     }
 });
