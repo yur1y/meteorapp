@@ -14,7 +14,6 @@ Template.event.onCreated(function () {
     this.left = new ReactiveVar();
     this.groupsIn = new ReactiveVar();
     this.eventId = new ReactiveVar();
-
     setInterval(() => {
         this.left.set(new Date()); //update reactive var every 1 sec
     }, 1000);
@@ -45,7 +44,11 @@ Template.event.helpers({
         });
     },
     itemsToOrder(){
-        return Items.find({'cart.user': Meteor.userId()})
+        let groupsUrls = [];
+        Groups.find({_id: {$in: Template.instance().groupsIn.get()}}).map(function (group) {
+            groupsUrls.push(group.url);
+        });
+        return Items.find({'cart.user': Meteor.userId(), itemUrl: {$in: groupsUrls}})
     },
     itemAmount (){
         return userAmount(this._id, Meteor.userId())
@@ -89,7 +92,7 @@ Template.event.events({
 
         if (radio.val() == this.cash) Meteor.call('items.payBy', this._id, 'cash');
         if (radio.val() == this.coupons) Meteor.call('items.payBy', this._id, 'coup');
-   },
+    },
     'click input:radio'(e){
 
         let radio = $('input[name="' + e.currentTarget.name + '"]:checked');

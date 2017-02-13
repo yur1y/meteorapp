@@ -3,7 +3,7 @@ import {Template} from 'meteor/templating';
 
 import {Items} from '../../../../imports/api/methods/items'
 
-import {ok,parent} from '../../../../imports/startup/both/helpers';
+import {ok} from '../../../../imports/startup/both/helpers';
 
 import './items.html';
 
@@ -43,7 +43,7 @@ Template.itemsData.events({
     'submit .new-item'(e,temp)  {
         e.preventDefault();
 
-        Meteor.call('items.insert', parent(temp).url.get(), e.target.name.value,
+        Meteor.call('items.insert', this.url, e.target.name.value,
             Number(e.target.cash.value), Number(e.target.amount.value), function (err, res) {
                 if (res) {
                     ok('Item ' + e.target.name.value + ' created');
