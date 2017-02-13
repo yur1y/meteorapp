@@ -163,7 +163,7 @@ Meteor.methods({
 
             if (data.email == true) {
 
-                let userEmail = Meteor.call('users.email', this.userId);
+                let userEmail = Meteor.call('users.email', user);
                 Meteor.call('users.send', userEmail, 'cheque.html', data);
             }
         }
