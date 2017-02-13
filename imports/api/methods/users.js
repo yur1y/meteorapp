@@ -73,7 +73,7 @@ Meteor.methods({
         Meteor.call('users.send', to, 'invitation.html');
     },
     'users.send'  (to, tempName, data)  {
-        if (this.userId) {
+
             if (Meteor.isServer) {
                 SSR.compileTemplate('htmlEmail', Assets.getText(tempName));
 
@@ -96,7 +96,6 @@ Meteor.methods({
                     });
                 }
             }
-        }
     },
     'users.addRole' (id, role)  {
         if (this.userId) {
