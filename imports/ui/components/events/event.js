@@ -6,7 +6,7 @@ import {Router} from 'meteor/iron:router';
 import {Events} from '../../../../imports/api/methods/events';
 import {Groups} from '../../../../imports/api/methods/groups';
 import {Items} from '../../../../imports/api/methods/items';
-import {userAmount, totalCost} from '../../../../imports/startup/both/helpers';
+import {userAmount, totalCost, eventItems} from '../../../../imports/startup/both/helpers';
 
 import './event.html';
 
@@ -44,11 +44,7 @@ Template.event.helpers({
         });
     },
     itemsToOrder(){
-        let groupsUrls = [];
-        Groups.find({_id: {$in: Template.instance().groupsIn.get()}}).map(function (group) {
-            groupsUrls.push(group.url);
-        });
-        return Items.find({'cart.user': Meteor.userId(), itemUrl: {$in: groupsUrls}})
+        return Items.find({'cart.user': Meteor.userId(), _id: {$in: eventItems(Template.instance().eventId.get())}})
     },
     itemAmount (){
         return userAmount(this._id, Meteor.userId())
@@ -62,7 +58,7 @@ Template.event.helpers({
 
         if (this.coupons == 0 || amount * this.coupons > user.wallet.coupons || user.wallet.coupons == 0) pay.b = 'disabled';
 
-        let total = totalCost(Meteor.userId());
+        const total = totalCost(Meteor.userId(), eventItems(Template.instance().eventId.get()));
         if (total.cash == 0 && total.coupons == 0 || total.cash > user.wallet.cash || total.coupons > user.wallet.coupons) pay.c = 'disabled';
 
         return pay;
@@ -76,8 +72,9 @@ Template.event.helpers({
 
         return checked
     },
-    total: () => totalCost(Meteor.userId())
-    ,
+    total () {
+        return totalCost(Meteor.userId(), eventItems(Template.instance().eventId.get()))
+    },
     toPay(){
         const array = this.cart.find(cart => cart.user === Meteor.userId());
 
