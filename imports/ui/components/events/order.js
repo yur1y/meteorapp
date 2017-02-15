@@ -2,7 +2,6 @@ import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
 
-import {Items} from '../../../../imports/api/methods/items';
 import {Events} from '../../../../imports/api/methods/events';
 
 import {totalCost, parent, eventItems} from '../../../../imports/startup/both/helpers';
@@ -46,16 +45,16 @@ Template.order.events({
         let event = Events.findOne({_id: parent(temp).eventId.get()});
 
         let data = {
-            items: eventItems(event._id,Meteor.userId()),
+            items: eventItems(event._id, Meteor.userId()),
             delivery: temp.delivery.get(),
             event: parent(temp).eventId.get(),
             email: $('#check-email').is(':checked'),
             owner: Meteor.users.findOne({_id: event.owner})
         };
 
-        // Meteor.call('events.order', data.event, Number(data.delivery));
+        Meteor.call('events.order', data.event, Number(data.delivery));
 
-        // Meteor.call('items.order', data.items, event.owner, data.delivery);
+        Meteor.call('items.order', data.items, event.owner, data.delivery);
 
         Meteor.call('users.orderReport', data);
         document.querySelector('#order-dialog').close();
