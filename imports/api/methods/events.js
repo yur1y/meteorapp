@@ -129,7 +129,7 @@ Meteor.methods({
     },
     'events.order'(id, delivery)  {
         if (this.userId) {
-            Events.update({_id: id}, {$push: {ordered: {user: this.userId, delivery: delivery}}});
+            Events.update({_id: id}, {$push: {'ordered.user': this.userId, 'ordered.delivery': delivery}});
 
             let event = Events.findOne({_id: id});
             if (event.ordered.length == event.confirm.length) {
